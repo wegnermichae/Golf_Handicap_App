@@ -1,8 +1,9 @@
 package com.example.golfhandicapapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +28,60 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        final ImageButton DashButton = findViewById(R.id.DashButton);
-        final ImageButton ScoreButton = findViewById(R.id.ScoreButton);
-        final ImageButton PlayerButton = findViewById(R.id.PlayerButton);
-        final ImageButton CourseButton = findViewById(R.id.CourseButton);
-        final ImageButton BagButton = findViewById(R.id.BagButton);
+        ImageButton DashButton = findViewById(R.id.DashButton);
+        ImageButton ScoreButton = findViewById(R.id.ScoreButton);
+        ImageButton PlayerButton = findViewById(R.id.PlayerButton);
+        ImageButton CourseButton = findViewById(R.id.CourseButton);
+        ImageButton BagButton = findViewById(R.id.BagButton);
         SeekBar scoreSeekBar = findViewById(R.id.scoreSeekBar);
         SeekBar handicapSeekBar = findViewById(R.id.handicapSeekBar);
-        TextView headingText = findViewById(R.id.headingText);
+        TextView headingText = findViewById(R.id.textHeading);
         TextView previousScore = findViewById(R.id.previousScore);
         TextView currentHandicap = findViewById(R.id.currentHandicap);
 
+        ScoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.ScoreButton) {
+                    Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+        PlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.PlayerButton) {
+                    Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        CourseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.CourseButton) {
+                    Intent intent = new Intent(MainActivity.this, CourseActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        BagButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.BagButton) {
+                    Intent intent = new Intent(MainActivity.this, BagActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
     }
+
+
+
+
 }
