@@ -1,3 +1,10 @@
+/**
+ * Author: Michael Wegner
+ * Class: MainActivity
+ * Purpose: This class will handle the main menu of the application and its interactions
+ */
+
+
 package com.example.golfhandicapapp;
 
 import android.content.Intent;
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         TextView previousScore = findViewById(R.id.previousScore);
         TextView currentHandicap = findViewById(R.id.currentHandicap);
 
+        //the following listeners will allow for functionality of the specified button clicks
         ScoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         PlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
