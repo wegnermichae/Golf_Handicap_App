@@ -47,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
         TextView currentHandicap = findViewById(R.id.currentHandicap);
 
         //the following listeners will allow for functionality of the specified button clicks
+        DashButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.DashButton) {
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         ScoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
