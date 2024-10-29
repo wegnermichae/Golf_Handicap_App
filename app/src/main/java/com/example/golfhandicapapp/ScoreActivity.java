@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +12,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class ScoreActivity extends AppCompatActivity {
+
+    ArrayList<Integer> scores = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,9 @@ public class ScoreActivity extends AppCompatActivity {
         ImageButton PlayerButton = findViewById(R.id.playerButton2);
         ImageButton CourseButton = findViewById(R.id.courseButton2);
         ImageButton BagButton = findViewById(R.id.bagButton2);
+        ImageButton AddButton = findViewById(R.id.addButton);
+        ListView ScoreList = findViewById(R.id.scoreList);
+
 
 
 
