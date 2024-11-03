@@ -2,7 +2,10 @@ package com.example.golfhandicapapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -17,10 +20,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreActivity extends AppCompatActivity {
 
-    ArrayList<Integer> scores = new ArrayList<Integer>();
+    ArrayList<String> scores = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,20 @@ public class ScoreActivity extends AppCompatActivity {
         EditText scoreInput = findViewById(R.id.scoreInput);
         EditText courseInput = findViewById(R.id.courseInput);
         EditText playerInput = findViewById(R.id.playerInput);
+        Button ViewScores = findViewById(R.id.viewScores);
 
+        ViewScores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.viewScores) {
+                    DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
+                    List<Scores> everyone = dataBaseHelper.getAllScores();
+
+                    ArrayAdapter<Scores> scoreArrayAdapter = new ArrayAdapter<Scores>(ScoreActivity.this, android.R.layout.simple_list_item_1, everyone);
+                    ScoreList.setAdapter(scoreArrayAdapter);
+                }
+            }
+        });
 
 
         AddButton.setOnClickListener(new View.OnClickListener() {
@@ -59,15 +76,11 @@ public class ScoreActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         score = new Scores(0, "Null", "Null");
                     }
-                    //This is a test to ensure the above code works
-                    Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
-
-                    //This seems to be broke TODO: Fix
-                    //DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
-                    //boolean success = dataBaseHelper.addOne(score);
-                    //if (success) {
-                    //    Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
-                    //}
+                    DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
+                    boolean success = dataBaseHelper.addOne(score);
+                    if (success) {
+                        Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

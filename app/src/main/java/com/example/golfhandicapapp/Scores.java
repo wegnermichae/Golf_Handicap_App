@@ -1,5 +1,7 @@
 package com.example.golfhandicapapp;
 
+import androidx.annotation.NonNull;
+
 public class Scores {
     public int score;
     public String course;
@@ -27,4 +29,11 @@ public class Scores {
     public void setPlayer(String player){
         this.player = player;
     }
+
+    @Override
+    public String toString(){
+        return "Score: " + score + " Course: " + course + " Player: " + player;
+    }
+
+
 }
