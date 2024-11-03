@@ -3,8 +3,11 @@ package com.example.golfhandicapapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,8 +40,34 @@ public class ScoreActivity extends AppCompatActivity {
         ImageButton BagButton = findViewById(R.id.bagButton2);
         ImageButton AddButton = findViewById(R.id.addButton);
         ListView ScoreList = findViewById(R.id.scoreList);
+        TextView scoreEntry = findViewById(R.id.scoreEntry);
+        TextView courseEntry = findViewById(R.id.courseEntry);
+        TextView playerEntry = findViewById(R.id.playerEntry);
+        EditText scoreInput = findViewById(R.id.scoreInput);
+        EditText courseInput = findViewById(R.id.courseInput);
+        EditText playerInput = findViewById(R.id.playerInput);
 
 
+
+        AddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Scores score;
+                try{
+                    score = new Scores(Integer.parseInt(scoreInput.getText().toString()), courseInput.getText().toString(), playerInput.getText().toString());
+                }
+                catch(Exception e){
+                    score = new Scores(0, "Null", "Null");
+                }
+
+
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
+                boolean success = dataBaseHelper.addOne(score);
+                if (success){
+                    Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
         //the following listeners will allow for functionality of the specified button clicks
