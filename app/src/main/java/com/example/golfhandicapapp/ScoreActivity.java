@@ -52,19 +52,22 @@ public class ScoreActivity extends AppCompatActivity {
         AddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Scores score;
-                try{
-                    score = new Scores(Integer.parseInt(scoreInput.getText().toString()), courseInput.getText().toString(), playerInput.getText().toString());
-                }
-                catch(Exception e){
-                    score = new Scores(0, "Null", "Null");
-                }
-
-
-                DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
-                boolean success = dataBaseHelper.addOne(score);
-                if (success){
+                if (v.getId() == R.id.addButton) {
+                    Scores score;
+                    try {
+                        score = new Scores(Integer.parseInt(scoreInput.getText().toString()), courseInput.getText().toString(), playerInput.getText().toString());
+                    } catch (Exception e) {
+                        score = new Scores(0, "Null", "Null");
+                    }
+                    //This is a test to ensure the above code works
                     Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
+
+                    //This seems to be broke TODO: Fix
+                    //DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
+                    //boolean success = dataBaseHelper.addOne(score);
+                    //if (success) {
+                    //    Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
+                    //}
                 }
             }
         });
