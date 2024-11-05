@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBaseHelper extends SQLiteOpenHelper {
+public class DataBaseHelperScores extends SQLiteOpenHelper {
 
     public static final String COLUMN_SCORE = "SCORE";
     public static final String SCORES_TABLE_NAME = COLUMN_SCORE + "S_TABLE";
@@ -20,8 +20,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PLAYER = "PLAYER";
 
 
-    public DataBaseHelper(@Nullable Context context) {
-        super(context, "scores.db", null, 1);
+    public DataBaseHelperScores(@Nullable Context context) {
+        super(context, "score.db", null, 1);
     }
 
     @Override

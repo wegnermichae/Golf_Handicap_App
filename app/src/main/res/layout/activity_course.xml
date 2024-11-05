@@ -141,4 +141,123 @@
         android:textSize="60sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/courseList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintBottom_toTopOf="@+id/divider12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+
+    <ImageButton
+        android:id="@+id/courseAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/divider11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <TextView
+        android:id="@+id/courseNameText"
+        android:layout_width="96dp"
+        android:layout_height="64dp"
+        android:text="Course Name"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+
+    <TextView
+        android:id="@+id/courseParText"
+        android:layout_width="96dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="-24dp"
+        android:text="Course Par"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/playerButton3"
+        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+
+    <TextView
+        android:id="@+id/courseSlopeText"
+        android:layout_width="96dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="-24dp"
+        android:text="Slope Rating"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/playerButton3"
+        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+
+    <TextView
+        android:id="@+id/courseHandText"
+        android:layout_width="96dp"
+        android:layout_height="64dp"
+        android:text="Handicap"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+
+    <EditText
+        android:id="@+id/nameEntry"
+        android:layout_width="96dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ex. Erin Hills"
+        app:layout_constraintBottom_toTopOf="@+id/courseList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseNameText" />
+
+    <EditText
+        android:id="@+id/parEntry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ex. 72"
+        app:layout_constraintBottom_toTopOf="@+id/courseList"
+        app:layout_constraintEnd_toEndOf="@+id/courseParText"
+        app:layout_constraintStart_toStartOf="@+id/courseParText"
+        app:layout_constraintTop_toBottomOf="@+id/courseParText" />
+
+    <EditText
+        android:id="@+id/slopeEntry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ex. 135"
+        app:layout_constraintBottom_toTopOf="@+id/courseList"
+        app:layout_constraintEnd_toEndOf="@+id/courseSlopeText"
+        app:layout_constraintStart_toStartOf="@+id/courseSlopeText"
+        app:layout_constraintTop_toBottomOf="@+id/courseSlopeText" />
+
+    <EditText
+        android:id="@+id/handicapEntry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ex. 73.3"
+        app:layout_constraintBottom_toTopOf="@+id/courseList"
+        app:layout_constraintEnd_toEndOf="@+id/courseHandText"
+        app:layout_constraintStart_toStartOf="@+id/courseHandText"
+        app:layout_constraintTop_toBottomOf="@+id/courseHandText" />
+
+    <Button
+        android:id="@+id/viewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="view"
+        app:layout_constraintBottom_toTopOf="@+id/courseSlopeText"
+        app:layout_constraintEnd_toStartOf="@+id/courseAdd"
+        app:layout_constraintStart_toEndOf="@+id/textHeading5"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

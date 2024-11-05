@@ -2,7 +2,6 @@ package com.example.golfhandicapapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,13 +17,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreActivity extends AppCompatActivity {
-
-    ArrayList<String> scores = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +52,8 @@ public class ScoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.viewScores) {
-                    DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
-                    List<Scores> everyone = dataBaseHelper.getAllScores();
+                    DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
+                    List<Scores> everyone = dataBaseHelperScores.getAllScores();
 
                     ArrayAdapter<Scores> scoreArrayAdapter = new ArrayAdapter<Scores>(ScoreActivity.this, android.R.layout.simple_list_item_1, everyone);
                     ScoreList.setAdapter(scoreArrayAdapter);
@@ -76,8 +72,8 @@ public class ScoreActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         score = new Scores(0, "Null", "Null");
                     }
-                    DataBaseHelper dataBaseHelper = new DataBaseHelper(ScoreActivity.this);
-                    boolean success = dataBaseHelper.addOne(score);
+                    DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
+                    boolean success = dataBaseHelperScores.addOne(score);
                     if (success) {
                         Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
                     }

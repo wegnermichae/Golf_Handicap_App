@@ -1,7 +1,5 @@
 package com.example.golfhandicapapp;
 
-import androidx.annotation.NonNull;
-
 public class Scores {
     public int score;
     public String course;
