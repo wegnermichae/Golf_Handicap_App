@@ -73,5 +73,13 @@ public class DataBaseHelperScores extends SQLiteOpenHelper {
         return returnList;
     }
 
+    public void deleteOne(Scores score){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //TODO: This currently deletes all instances with that same score, fix this to only delete the selected instance
+        String query = "DELETE FROM " + SCORES_TABLE_NAME + " WHERE " + COLUMN_SCORE + " = " + score.getScore();
+        db.execSQL(query);
+
+    }
+
 
 }
