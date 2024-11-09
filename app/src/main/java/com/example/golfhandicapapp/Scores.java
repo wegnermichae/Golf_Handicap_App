@@ -1,13 +1,19 @@
 package com.example.golfhandicapapp;
 
 public class Scores {
-    public int score;
-    public String course;
-    public String player;
-    public Scores(int score, String course, String player){
+    private int id;
+    private int score;
+    private String course;
+    private String player;
+    public Scores(int id, int score, String course, String player){
+        this.id = id;
         this.score = score;
         this.course = course;
         this.player = player;
+    }
+
+    public int getId(){
+        return id;
     }
     public int getScore(){
         return score;
@@ -17,6 +23,9 @@ public class Scores {
         }
     public String getPlayer(){
         return player;
+    }
+    public void setId(int id){
+        this.id = id;
     }
     public void setScore(int score){
         this.score = score;
@@ -30,7 +39,7 @@ public class Scores {
 
     @Override
     public String toString(){
-        return "Score: " + score + " Course: " + course + " Player: " + player;
+        return "Id: " + id + " Score: " + score + " Course: " + course + " Player: " + player;
     }
 
 

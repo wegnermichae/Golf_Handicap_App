@@ -58,12 +58,12 @@ public class DataBaseHelperScores extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                int customerID = cursor.getInt(0);
+                int scorerID = cursor.getInt(0);
                 int score = cursor.getInt(1);
                 String course = cursor.getString(2);
                 String player = cursor.getString(3);
 
-                Scores newScores = new Scores(score, course, player);
+                Scores newScores = new Scores(scorerID, score, course, player);
                 returnList.add(newScores);
 
             } while(cursor.moveToNext());
@@ -75,8 +75,7 @@ public class DataBaseHelperScores extends SQLiteOpenHelper {
 
     public void deleteOne(Scores score){
         SQLiteDatabase db = this.getWritableDatabase();
-        //TODO: This currently deletes all instances with that same score, fix this to only delete the selected instance
-        String query = "DELETE FROM " + SCORES_TABLE_NAME + " WHERE " + COLUMN_SCORE + " = " + score.getScore();
+        String query = "DELETE FROM " + SCORES_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + score.getId();
         db.execSQL(query);
 
     }

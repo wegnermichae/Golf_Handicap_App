@@ -31,6 +31,9 @@ public class ScoreActivity extends AppCompatActivity {
     TextView scoreEntry, courseEntry, playerEntry;
     ListView ScoreList;
     Button ViewScores;
+    ArrayAdapter<Scores> scoreArrayAdapter;
+
+    DataBaseHelperScores dataBaseHelperScores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +67,7 @@ public class ScoreActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (v.getId() == R.id.viewScores) {
                     DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
-                    List<Scores> everyone = dataBaseHelperScores.getAllScores();
-
-                    Toast.makeText(ScoreActivity.this, everyone.get(0).getPlayer(), Toast.LENGTH_SHORT).show();
-
-
-                    ArrayAdapter<Scores> scoreArrayAdapter = new ArrayAdapter<Scores>(ScoreActivity.this, android.R.layout.simple_list_item_1, everyone);
+                    scoreArrayAdapter = new ArrayAdapter<Scores>(ScoreActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperScores.getAllScores());
                     ScoreList.setAdapter(scoreArrayAdapter);
                 }
             }
@@ -82,12 +80,15 @@ public class ScoreActivity extends AppCompatActivity {
                 if (v.getId() == R.id.addButton) {
                     Scores score;
                     try {
-                        score = new Scores(Integer.parseInt(scoreInput.getText().toString()), courseInput.getText().toString(), playerInput.getText().toString());
+                        score = new Scores(-1, Integer.parseInt(scoreInput.getText().toString()), courseInput.getText().toString(), playerInput.getText().toString());
                     } catch (Exception e) {
-                        score = new Scores(0, "Null", "Null");
+                        score = new Scores(-1, 0, "Null", "Null");
                     }
                     DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
                     boolean success = dataBaseHelperScores.addOne(score);
+
+                    scoreArrayAdapter = new ArrayAdapter<Scores>(ScoreActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperScores.getAllScores());
+
                     if (success) {
                         Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
                     }
