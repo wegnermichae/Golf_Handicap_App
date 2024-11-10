@@ -10,6 +10,7 @@ package com.example.golfhandicapapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -21,6 +22,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton;
+    SeekBar scoreSeekBar, handicapSeekBar;
+    TextView headingText, previousScore, currentHandicap;
+    Button playButton;
 
 
 
@@ -35,16 +41,29 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        ImageButton DashButton = findViewById(R.id.DashButton);
-        ImageButton ScoreButton = findViewById(R.id.ScoreButton);
-        ImageButton PlayerButton = findViewById(R.id.PlayerButton);
-        ImageButton CourseButton = findViewById(R.id.CourseButton);
-        ImageButton BagButton = findViewById(R.id.BagButton);
-        SeekBar scoreSeekBar = findViewById(R.id.scoreSeekBar);
-        SeekBar handicapSeekBar = findViewById(R.id.handicapSeekBar);
-        TextView headingText = findViewById(R.id.textHeading);
-        TextView previousScore = findViewById(R.id.previousScore);
-        TextView currentHandicap = findViewById(R.id.currentHandicap);
+        DashButton = findViewById(R.id.DashButton);
+        ScoreButton = findViewById(R.id.ScoreButton);
+        PlayerButton = findViewById(R.id.PlayerButton);
+        CourseButton = findViewById(R.id.CourseButton);
+        BagButton = findViewById(R.id.BagButton);
+        scoreSeekBar = findViewById(R.id.scoreSeekBar);
+        handicapSeekBar = findViewById(R.id.handicapSeekBar);
+        headingText = findViewById(R.id.textHeading);
+        previousScore = findViewById(R.id.previousScore);
+        currentHandicap = findViewById(R.id.currentHandicap);
+        playButton = findViewById(R.id.playButton);
+
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.playButton){
+                    Intent intent = new Intent(MainActivity.this, PlayGolfActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
 
         //the following listeners will allow for functionality of the specified button clicks
         DashButton.setOnClickListener(new View.OnClickListener() {
