@@ -177,7 +177,7 @@
         android:layout_width="96dp"
         android:layout_height="64dp"
         android:layout_marginEnd="-24dp"
-        android:text="Course Par"
+        android:text="Hole Number"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/playerButton3"
@@ -188,7 +188,7 @@
         android:layout_width="96dp"
         android:layout_height="64dp"
         android:layout_marginStart="-24dp"
-        android:text="Slope Rating"
+        android:text="Hole Par"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/playerButton3"
@@ -198,7 +198,7 @@
         android:id="@+id/courseHandText"
         android:layout_width="96dp"
         android:layout_height="64dp"
-        android:text="Handicap"
+        android:text="Hole Handicap"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -210,10 +210,21 @@
         android:layout_height="0dp"
         android:ems="10"
         android:inputType="text"
-        android:text="ex. Erin Hills"
         app:layout_constraintBottom_toTopOf="@+id/courseList"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseNameText" />
+
+    <EditText
+        android:id="@+id/holeEntry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ex. 1"
+        app:layout_constraintBottom_toTopOf="@+id/courseList"
+        app:layout_constraintEnd_toEndOf="@+id/courseParText"
+        app:layout_constraintStart_toStartOf="@+id/courseParText"
+        app:layout_constraintTop_toBottomOf="@+id/courseParText" />
 
     <EditText
         android:id="@+id/parEntry"
@@ -221,19 +232,7 @@
         android:layout_height="0dp"
         android:ems="10"
         android:inputType="text"
-        android:text="ex. 72"
-        app:layout_constraintBottom_toTopOf="@+id/courseList"
-        app:layout_constraintEnd_toEndOf="@+id/courseParText"
-        app:layout_constraintStart_toStartOf="@+id/courseParText"
-        app:layout_constraintTop_toBottomOf="@+id/courseParText" />
-
-    <EditText
-        android:id="@+id/slopeEntry"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="ex. 135"
+        android:text="ex. 5"
         app:layout_constraintBottom_toTopOf="@+id/courseList"
         app:layout_constraintEnd_toEndOf="@+id/courseSlopeText"
         app:layout_constraintStart_toStartOf="@+id/courseSlopeText"
@@ -245,7 +244,7 @@
         android:layout_height="0dp"
         android:ems="10"
         android:inputType="text"
-        android:text="ex. 73.3"
+        android:text="ex. 2"
         app:layout_constraintBottom_toTopOf="@+id/courseList"
         app:layout_constraintEnd_toEndOf="@+id/courseHandText"
         app:layout_constraintStart_toStartOf="@+id/courseHandText"
@@ -260,4 +259,5 @@
         app:layout_constraintEnd_toStartOf="@+id/courseAdd"
         app:layout_constraintStart_toEndOf="@+id/textHeading5"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

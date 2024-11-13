@@ -1,3 +1,7 @@
+//TODO: Add delete function
+
+
+
 package com.example.golfhandicapapp;
 
 import android.content.ContentValues;
@@ -14,21 +18,25 @@ import java.util.List;
 public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
 
-    public static final String COLUMN_NAME = "COURSE";
-    public static final String COURSE_TABLE_NAME = COLUMN_NAME + "S_TABLE";
+    public static final String COLUMN_HOLE = "HOLE";
+    public static final String COURSE_TABLE_NAME = COLUMN_HOLE + "S_TABLE";
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_PAR = "PAR";
     public static final String COLUMN_SLOPE = "SLOPE";
     public static final String COLUMN_HANDICAP = "HANDICAP";
 
+    private String dbName;
 
-    public DataBaseHelperCourses(@Nullable Context context) {
-        super(context, "courses.db", null, 1);
+    public ArrayList<String> courses;
+
+    public DataBaseHelperCourses(@Nullable Context context, String dbName) {
+        super(context, dbName +".db", null, 1);
+        this.dbName = dbName;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + COURSE_TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME + " TEXT, " + COLUMN_PAR + " INTEGER, " + COLUMN_SLOPE + " INTEGER, " + COLUMN_HANDICAP + " FLOAT)";
+        String createTableStatement = "CREATE TABLE " + COURSE_TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_HOLE + " INTEGER, " + COLUMN_PAR + " INTEGER, " + COLUMN_HANDICAP + " INTEGER)";
         db.execSQL(createTableStatement);
     }
 
@@ -42,17 +50,16 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(COLUMN_NAME, courses.getName());
+        cv.put(COLUMN_HOLE, courses.getHoleNumber());
         cv.put(COLUMN_PAR, courses.getPar());
-        cv.put(COLUMN_SLOPE, courses.getSlopeRating());
-        cv.put(COLUMN_HANDICAP, courses.getHandicap());
+        cv.put(COLUMN_HANDICAP, courses.getHoleHandicap());
 
         long insert = db.insert(COURSE_TABLE_NAME, null, cv);
         return insert != -1;
     }
 
 
-    public List<Courses> getAllCourses(){
+    public List<Courses> getAllHoles(){
         List<Courses> returnList = new ArrayList<>();
 
         String query = "SELECT * FROM " + COURSE_TABLE_NAME;
@@ -61,13 +68,12 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                int customerID = cursor.getInt(0);
-                String name = cursor.getString(1);
+                //int customerID = cursor.getInt(0);
+                int holeNumber = cursor.getInt(1);
                 int par = cursor.getInt(2);
-                int slope = cursor.getInt(3);
-                double handicap = cursor.getDouble(4);
+                int handicap = cursor.getInt(3);
 
-                Courses newCourse = new Courses(name, par, slope, handicap);
+                Courses newCourse = new Courses(holeNumber, par, handicap);
                 returnList.add(newCourse);
 
             } while(cursor.moveToNext());

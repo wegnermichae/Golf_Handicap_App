@@ -87,8 +87,6 @@ public class ScoreActivity extends AppCompatActivity {
                     DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
                     boolean success = dataBaseHelperScores.addOne(score);
 
-                    scoreArrayAdapter = new ArrayAdapter<Scores>(ScoreActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperScores.getAllScores());
-
                     if (success) {
                         Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
                     }

@@ -3,6 +3,7 @@ package com.example.golfhandicapapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ public class PlayGolfActivity extends AppCompatActivity {
             golfer3Strokes, golfer4Strokes;
     ListView holeView;
     ImageButton dashButton, scoreButton, bagButton, courseButton, playerButton;
+    ArrayAdapter<Golfers> golfArrayAdapter;
 
     public void calculateExtraStrokes(){
         //TODO: Calculate extra strokes for each golfer
@@ -74,6 +76,9 @@ public class PlayGolfActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         golfers = new Golfers(-1, "Null", -1);
                     }
+                    DataBaseHelperGolfers dataBaseHelperGolfers = new DataBaseHelperGolfers(PlayGolfActivity.this);
+                    golfArrayAdapter = new ArrayAdapter<Golfers>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperGolfers.getAllGolfers());
+                    holeView.setAdapter(golfArrayAdapter);
                 }
             }
         });
