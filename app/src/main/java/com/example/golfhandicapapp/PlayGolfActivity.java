@@ -2,13 +2,11 @@ package com.example.golfhandicapapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,18 +14,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+import java.text.MessageFormat;
 import java.util.List;
 
 public class PlayGolfActivity extends AppCompatActivity {
 
     Button submitButton;
+
+    //TODO: replace stroke fields as textfields because they should not be editable
+    //TODO: also update the handicap fields to include 'Handicap: ' after entry
+
     EditText courseName, golfer1Name, golfer2Name, golfer3Name, golfer4Name, golfer1Handicap,
             golfer2Handicap, golfer3Handicap, golfer4Handicap, golfer1Strokes, golfer2Strokes,
             golfer3Strokes, golfer4Strokes;
     ListView holeView;
     ImageButton dashButton, scoreButton, bagButton, courseButton, playerButton;
-    ArrayAdapter<Golfers> golfArrayAdapter;
 
     public int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
 
@@ -44,11 +45,10 @@ public class PlayGolfActivity extends AppCompatActivity {
         golfer3StrokesInt = golfer3StrokesInt - smallest;
         golfer4StrokesInt = golfer4StrokesInt - smallest;
 
-        golfer1Strokes.setText(String.valueOf(golfer1StrokesInt));
-        golfer2Strokes.setText(String.valueOf(golfer2StrokesInt));
-        golfer3Strokes.setText(String.valueOf(golfer3StrokesInt));
-        golfer4Strokes.setText(String.valueOf(golfer4StrokesInt));
-
+        golfer1Strokes.setText(MessageFormat.format("Strokes: {0}", golfer1StrokesInt));
+        golfer2Strokes.setText(MessageFormat.format("Strokes: {0}", golfer2StrokesInt));
+        golfer3Strokes.setText(MessageFormat.format("Strokes: {0}", golfer3StrokesInt));
+        golfer4Strokes.setText(MessageFormat.format("Strokes: {0}", golfer4StrokesInt));
     }
 
 
@@ -90,75 +90,57 @@ public class PlayGolfActivity extends AppCompatActivity {
 
 
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.submitButton) {
-                    updateExtraStrokes();
-                    String dbName = courseName.getText().toString();
-                    if(!dbName.isEmpty()) {
-                        DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(PlayGolfActivity.this, dbName);
+        submitButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.submitButton) {
+                updateExtraStrokes();
+                String dbName = courseName.getText().toString();
+                if(!dbName.isEmpty()) {
+                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(PlayGolfActivity.this, dbName);
 
-                        List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
+                    List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
 
-                        ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<Courses>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, everyone);
-                        holeView.setAdapter(courseArrayAdapter);
-                    }else{
-                        courseName.setError("Please enter a name");
-                    }
+                    ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, everyone);
+                    holeView.setAdapter(courseArrayAdapter);
+                }else{
+                    courseName.setError("Please enter a name");
                 }
             }
         });
 
 
         //the following listeners will allow for functionality of the specified button clicks
-        dashButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.dashButton5) {
-                    Intent intent = new Intent(PlayGolfActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+        dashButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.dashButton5) {
+                Intent intent = new Intent(PlayGolfActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
-        scoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.scoreButton5) {
-                    Intent intent = new Intent(PlayGolfActivity.this, ScoreActivity.class);
-                    startActivity(intent);
-                }
+        scoreButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.scoreButton5) {
+                Intent intent = new Intent(PlayGolfActivity.this, ScoreActivity.class);
+                startActivity(intent);
             }
         });
 
-        playerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.playerButton5) {
-                    Intent intent = new Intent(PlayGolfActivity.this, PlayerActivity.class);
-                    startActivity(intent);
-                }
+        playerButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.playerButton5) {
+                Intent intent = new Intent(PlayGolfActivity.this, PlayerActivity.class);
+                startActivity(intent);
             }
         });
 
-        courseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.courseButton5) {
-                    Intent intent = new Intent(PlayGolfActivity.this, CourseActivity.class);
-                    startActivity(intent);
-                }
+        courseButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.courseButton5) {
+                Intent intent = new Intent(PlayGolfActivity.this, CourseActivity.class);
+                startActivity(intent);
             }
         });
 
-        bagButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.bagButton5) {
-                    Intent intent = new Intent(PlayGolfActivity.this, BagActivity.class);
-                    startActivity(intent);
-                }
+        bagButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.bagButton5) {
+                Intent intent = new Intent(PlayGolfActivity.this, BagActivity.class);
+                startActivity(intent);
             }
         });
 
