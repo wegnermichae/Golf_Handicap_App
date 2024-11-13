@@ -98,7 +98,6 @@ public class ScoreActivity extends AppCompatActivity {
         //Handle deleting score from score database
         ScoreList.setOnItemClickListener((parent, view, position, id) -> {
             Scores scores = (Scores) parent.getItemAtPosition(position);
-            //make popup asking delete, edit or cancel
             DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
             dataBaseHelperScores.deleteOne(scores);
             Toast.makeText(ScoreActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();

@@ -70,9 +70,9 @@ public class CourseActivity extends AppCompatActivity {
                 if (v.getId() == R.id.courseAdd) {
                     Courses courses;
                     try {
-                        courses = new Courses(Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
+                        courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
                     } catch (Exception e) {
-                        courses = new Courses(Integer.parseInt(holeEntry.getText().toString()), 0, 0);
+                        courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), 0, 0);
                     }
                     String dbName = nameEntry.getText().toString();
                     if (!dbName.isEmpty()) {
@@ -85,6 +85,19 @@ public class CourseActivity extends AppCompatActivity {
                         nameEntry.setError("Please enter a name");
                     }
                 }
+            }
+        });
+
+
+        courseList.setOnItemClickListener((parent, view, position, id) -> {
+            Courses courses = (Courses) parent.getItemAtPosition(position);
+            String dbName = nameEntry.getText().toString();
+            if(!dbName.isEmpty()) {
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
+                dataBaseHelperCourses.deleteOne(courses);
+                Toast.makeText(CourseActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
+            }else{
+                nameEntry.setError("Please enter a name");
             }
         });
 

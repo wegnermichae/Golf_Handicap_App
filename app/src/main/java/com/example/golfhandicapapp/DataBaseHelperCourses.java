@@ -1,7 +1,3 @@
-//TODO: Add delete function
-
-
-
 package com.example.golfhandicapapp;
 
 import android.content.ContentValues;
@@ -68,12 +64,12 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                //int customerID = cursor.getInt(0);
+                int holeId = cursor.getInt(0);
                 int holeNumber = cursor.getInt(1);
                 int par = cursor.getInt(2);
                 int handicap = cursor.getInt(3);
 
-                Courses newCourse = new Courses(holeNumber, par, handicap);
+                Courses newCourse = new Courses(holeId, holeNumber, par, handicap);
                 returnList.add(newCourse);
 
             } while(cursor.moveToNext());
@@ -81,6 +77,13 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnList;
+    }
+
+    public void deleteOne(Courses courses){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + courses.getId();
+        db.execSQL(query);
+
     }
 
 }
