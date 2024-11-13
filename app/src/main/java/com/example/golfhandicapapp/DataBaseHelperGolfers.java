@@ -19,9 +19,10 @@ public class DataBaseHelperGolfers extends SQLiteOpenHelper {
     public static final String COLUMN_HANDICAP = "HANDICAP";
     public static final String COLUMN_PLAYER = "PLAYER";
 
+    private String dbName;
 
-    public DataBaseHelperGolfers(@Nullable Context context) {
-        super(context, "golfers.db", null, 1);
+    public DataBaseHelperGolfers(@Nullable Context context, String dbName) {
+        super(context, dbName + ".db", null, 1);
     }
 
     @Override

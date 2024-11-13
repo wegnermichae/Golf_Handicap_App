@@ -8,12 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayGolfActivity extends AppCompatActivity {
 
@@ -25,9 +29,28 @@ public class PlayGolfActivity extends AppCompatActivity {
     ImageButton dashButton, scoreButton, bagButton, courseButton, playerButton;
     ArrayAdapter<Golfers> golfArrayAdapter;
 
-    public void calculateExtraStrokes(){
-        //TODO: Calculate extra strokes for each golfer
+    public int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
+
+    public void updateExtraStrokes(){
+        golfer1StrokesInt = Integer.parseInt(golfer1Handicap.getText().toString());
+        golfer2StrokesInt = Integer.parseInt(golfer2Handicap.getText().toString());
+        golfer3StrokesInt = Integer.parseInt(golfer3Handicap.getText().toString());
+        golfer4StrokesInt = Integer.parseInt(golfer4Handicap.getText().toString());
+
+        int smallest = Math.min(golfer1StrokesInt, Math.min(golfer2StrokesInt, Math.min(golfer3StrokesInt, golfer4StrokesInt)));
+
+        golfer1StrokesInt = golfer1StrokesInt - smallest;
+        golfer2StrokesInt = golfer2StrokesInt - smallest;
+        golfer3StrokesInt = golfer3StrokesInt - smallest;
+        golfer4StrokesInt = golfer4StrokesInt - smallest;
+
+        golfer1Strokes.setText(String.valueOf(golfer1StrokesInt));
+        golfer2Strokes.setText(String.valueOf(golfer2StrokesInt));
+        golfer3Strokes.setText(String.valueOf(golfer3StrokesInt));
+        golfer4Strokes.setText(String.valueOf(golfer4StrokesInt));
+
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,19 +89,27 @@ public class PlayGolfActivity extends AppCompatActivity {
 
 
 
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.submitButton) {
-                    Golfers golfers;
-                    try {
-                        golfers = new Golfers(-1, golfer1Name.getText().toString(), Integer.parseInt(golfer1Handicap.getText().toString()));
-                    } catch (Exception e) {
-                        golfers = new Golfers(-1, "Null", -1);
+                    //TODO: Submit button functionality
+                    //determine how this is to be handled
+                    //the entered course is to be displayed in the listview
+                    //the entered handicaps are to be calculated and the extrastrokes updated
+                    updateExtraStrokes();
+                    String dbName = courseName.getText().toString();
+                    if(!dbName.isEmpty()) {
+                        DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(PlayGolfActivity.this, dbName);
+
+                        List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
+
+                        ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<Courses>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, everyone);
+                        holeView.setAdapter(courseArrayAdapter);
+                    }else{
+                        courseName.setError("Please enter a name");
                     }
-                    DataBaseHelperGolfers dataBaseHelperGolfers = new DataBaseHelperGolfers(PlayGolfActivity.this);
-                    golfArrayAdapter = new ArrayAdapter<Golfers>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperGolfers.getAllGolfers());
-                    holeView.setAdapter(golfArrayAdapter);
                 }
             }
         });

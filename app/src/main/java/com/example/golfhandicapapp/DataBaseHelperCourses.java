@@ -23,8 +23,6 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
     private String dbName;
 
-    public ArrayList<String> courses;
-
     public DataBaseHelperCourses(@Nullable Context context, String dbName) {
         super(context, dbName +".db", null, 1);
         this.dbName = dbName;
@@ -38,7 +36,6 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
 
