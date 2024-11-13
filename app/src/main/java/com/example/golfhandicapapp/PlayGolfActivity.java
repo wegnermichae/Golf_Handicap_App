@@ -94,10 +94,6 @@ public class PlayGolfActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (v.getId() == R.id.submitButton) {
-                    //TODO: Submit button functionality
-                    //determine how this is to be handled
-                    //the entered course is to be displayed in the listview
-                    //the entered handicaps are to be calculated and the extrastrokes updated
                     updateExtraStrokes();
                     String dbName = courseName.getText().toString();
                     if(!dbName.isEmpty()) {
