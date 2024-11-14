@@ -49,7 +49,6 @@ public class DataBaseHelperGolfers extends SQLiteOpenHelper {
         return insert != -1;
     }
 
-
     public List<Golfers> getAllGolfers(){
         List<Golfers> returnList = new ArrayList<>();
 

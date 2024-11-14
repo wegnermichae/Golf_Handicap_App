@@ -51,6 +51,31 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
         return insert != -1;
     }
 
+    public List<Courses> getHolesSortedByHandicap() {
+        List<Courses> holeList = new ArrayList<>();
+
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " ORDER BY handicap ASC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                int holeNumber = cursor.getInt(1);
+                int par = cursor.getInt(2);
+                int handicap = cursor.getInt(3);
+
+                Courses newHole = new Courses(id, holeNumber, par, handicap);
+                holeList.add(newHole);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return holeList;
+    }
+
 
     public List<Courses> getAllHoles(){
         List<Courses> returnList = new ArrayList<>();

@@ -197,7 +197,7 @@
         android:inputType="text"
         android:text="Handicap"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/golfer1Strokes"
+        app:layout_constraintEnd_toStartOf="@+id/extraStrokes1"
         app:layout_constraintStart_toEndOf="@+id/golfer1Name"
         app:layout_constraintTop_toBottomOf="@+id/divider15" />
 
@@ -239,53 +239,6 @@
         app:layout_constraintTop_toBottomOf="@+id/golfer3Handicap" />
 
     <EditText
-        android:id="@+id/golfer1Strokes"
-        android:layout_width="128dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Extra Strokes"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/golfer1Handicap" />
-
-    <EditText
-        android:id="@+id/golfer2Strokes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Extra Strokes"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/golfer1Strokes"
-        app:layout_constraintStart_toStartOf="@+id/golfer1Strokes"
-        app:layout_constraintTop_toBottomOf="@+id/golfer1Strokes" />
-
-    <EditText
-        android:id="@+id/golfer3Strokes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Extra Strokes"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/golfer2Strokes"
-        app:layout_constraintStart_toStartOf="@+id/golfer2Strokes"
-        app:layout_constraintTop_toBottomOf="@+id/golfer2Strokes" />
-
-    <EditText
-        android:id="@+id/golfer4Strokes"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Extra Strokes"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/golfer3Strokes"
-        app:layout_constraintStart_toStartOf="@+id/golfer3Strokes"
-        app:layout_constraintTop_toBottomOf="@+id/golfer3Strokes" />
-
-    <EditText
         android:id="@+id/courseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -317,5 +270,73 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseName" />
+
+    <EditText
+        android:id="@+id/extraStrokes1"
+        android:layout_width="128dp"
+        android:layout_height="0dp"
+        android:clickable="false"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer1Handicap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/golfer1Handicap" />
+
+    <EditText
+        android:id="@+id/extraStrokes2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer2Handicap"
+        app:layout_constraintEnd_toEndOf="@+id/extraStrokes1"
+        app:layout_constraintStart_toStartOf="@+id/extraStrokes1"
+        app:layout_constraintTop_toBottomOf="@+id/extraStrokes1" />
+
+    <EditText
+        android:id="@+id/extraStrokes3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer3Handicap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/extraStrokes2"
+        app:layout_constraintTop_toBottomOf="@+id/extraStrokes2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/extraStrokes4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer4Handicap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/extraStrokes3"
+        app:layout_constraintTop_toBottomOf="@+id/extraStrokes3" />
+
+    <EditText
+        android:id="@+id/output"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/golfer1Handicap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textHeading6"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
