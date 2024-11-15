@@ -31,8 +31,11 @@ public class PlayGolfActivity extends AppCompatActivity {
             golfer3Strokes, golfer4Strokes, output;
 
 
-    ListView holeView;
+    ListView holeView, outputListView;
     ImageButton dashButton, scoreButton, bagButton, courseButton, playerButton;
+
+    ArrayAdapter<String> outputAdapter;
+    List<String> outputMessages;
 
     public int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
 
@@ -65,27 +68,12 @@ public class PlayGolfActivity extends AppCompatActivity {
         }
 
         //update handicap text if handicap was entered
-        if(golfer1StrokesInt > -1){
-            golfer1Handicap.setText(MessageFormat.format("Handicap: {0}", golfer1StrokesInt));
-        }
-        if(golfer2StrokesInt > -1){
-            golfer2Handicap.setText(MessageFormat.format("Handicap: {0}", golfer2StrokesInt));
-        }
-        if(golfer3StrokesInt > -1){
-            golfer3Handicap.setText(MessageFormat.format("Handicap: {0}", golfer3StrokesInt));
-        }
-        if(golfer4StrokesInt > -1){
-            golfer4Handicap.setText(MessageFormat.format("Handicap: {0}", golfer4StrokesInt));
-        }
+        updateHandicapText(golfer1StrokesInt, golfer1Handicap, "Handicap: {0}");
+        updateHandicapText(golfer2StrokesInt, golfer2Handicap, "Handicap: {0}");
+        updateHandicapText(golfer3StrokesInt, golfer3Handicap, "Handicap: {0}");
+        updateHandicapText(golfer4StrokesInt, golfer4Handicap, "Handicap: {0}");
 
-        //if strokes is negative, set to max value to avoid being apart of smallest calculation
-        int adjusted1 = golfer1StrokesInt == -1 ? Integer.MAX_VALUE : golfer1StrokesInt;
-        int adjusted2 = golfer2StrokesInt == -1 ? Integer.MAX_VALUE : golfer2StrokesInt;
-        int adjusted3 = golfer3StrokesInt == -1 ? Integer.MAX_VALUE : golfer3StrokesInt;
-        int adjusted4 = golfer4StrokesInt == -1 ? Integer.MAX_VALUE : golfer4StrokesInt;
-
-        int smallest = Math.min(adjusted1, Math.min(adjusted2, Math.min(adjusted3, adjusted4)));
-
+        int smallest = calculateSmallestStrokes();
 
         golfer1StrokesInt = golfer1StrokesInt - smallest;
         golfer2StrokesInt = golfer2StrokesInt - smallest;
@@ -93,18 +81,10 @@ public class PlayGolfActivity extends AppCompatActivity {
         golfer4StrokesInt = golfer4StrokesInt - smallest;
 
         //update strokes text if strokes were calculated
-        if(golfer1StrokesInt > -1){
-            golfer1Strokes.setText(MessageFormat.format("Strokes: {0}", golfer1StrokesInt));
-        }
-        if(golfer2StrokesInt > -1){
-            golfer2Strokes.setText(MessageFormat.format("Strokes: {0}", golfer2StrokesInt));
-        }
-        if(golfer3StrokesInt > -1){
-            golfer3Strokes.setText(MessageFormat.format("Strokes: {0}", golfer3StrokesInt));
-        }
-        if(golfer4StrokesInt > -1){
-            golfer4Strokes.setText(MessageFormat.format("Strokes: {0}", golfer4StrokesInt));
-        }
+        updateHandicapText(golfer1StrokesInt, golfer1Strokes, "Strokes: {0}");
+        updateHandicapText(golfer2StrokesInt, golfer2Strokes, "Strokes: {0}");
+        updateHandicapText(golfer3StrokesInt, golfer3Strokes, "Strokes: {0}");
+        updateHandicapText(golfer4StrokesInt, golfer4Strokes, "Strokes: {0}");
 
         //gets golfers names
         name1 = golfer1Name.getText().toString();
@@ -112,9 +92,57 @@ public class PlayGolfActivity extends AppCompatActivity {
         name3 = golfer3Name.getText().toString();
         name4 = golfer4Name.getText().toString();
 
-        StringBuilder holesMessage = getStringBuilder(sorted);
+        List<String> messages = generateMessages(sorted);
+        updateListView(messages);
+    }
 
-        output.setText(holesMessage.toString());
+    private List<String> generateMessages(List<Courses> sorted) {
+        List<String> messages = new ArrayList<>();
+        if (golfer1StrokesInt > 0) {
+            messages.add(name1 + " gets a stroke on hole(s): " + getHoles(sorted, golfer1StrokesInt));
+        }
+        if (golfer2StrokesInt > 0) {
+            messages.add(name2 + " gets a stroke on hole(s): " + getHoles(sorted, golfer2StrokesInt));
+        }
+        if (golfer3StrokesInt > 0) {
+            messages.add(name3 + " gets a stroke on hole(s): " + getHoles(sorted, golfer3StrokesInt));
+        }
+        if (golfer4StrokesInt > 0) {
+            messages.add(name4 + " gets a stroke on hole(s): " + getHoles(sorted, golfer4StrokesInt));
+        }
+        return messages;
+    }
+
+    @NonNull
+    private String getHoles(List<Courses> sorted, int strokes) {
+        StringBuilder holes = new StringBuilder();
+        for (int i = 0; i < strokes; i++) {
+            if (i > 0) {
+                holes.append(", ");
+            }
+            holes.append(sorted.get(i).getHoleNumber());
+        }
+        return holes.toString();
+    }
+
+    private void updateListView(List<String> messages) {
+        outputMessages.clear();
+        outputMessages.addAll(messages);
+        outputAdapter.notifyDataSetChanged();
+    }
+
+    private int calculateSmallestStrokes() {
+        int adjusted1 = golfer1StrokesInt == -1 ? Integer.MAX_VALUE : golfer1StrokesInt;
+        int adjusted2 = golfer2StrokesInt == -1 ? Integer.MAX_VALUE : golfer2StrokesInt;
+        int adjusted3 = golfer3StrokesInt == -1 ? Integer.MAX_VALUE : golfer3StrokesInt;
+        int adjusted4 = golfer4StrokesInt == -1 ? Integer.MAX_VALUE : golfer4StrokesInt;
+        return Math.min(adjusted1, Math.min(adjusted2, Math.min(adjusted3, adjusted4)));
+    }
+
+    private void updateHandicapText(int strokesInt, TextView textView, String format) {
+        if (strokesInt > -1) {
+            textView.setText(MessageFormat.format(format, strokesInt));
+        }
     }
 
     @NonNull
@@ -209,12 +237,13 @@ public class PlayGolfActivity extends AppCompatActivity {
         golfer2Strokes = findViewById(R.id.extraStrokes2);
         golfer3Strokes = findViewById(R.id.extraStrokes3);
         golfer4Strokes = findViewById(R.id.extraStrokes4);
-        output = findViewById(R.id.output);
+
+        outputListView = findViewById(R.id.outputListView);
+        outputMessages = new ArrayList<>();
+        outputAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, outputMessages);
+        outputListView.setAdapter(outputAdapter);
 
         holeView = findViewById(R.id.holeView);
-
-
-
 
 
         submitButton.setOnClickListener(v -> {

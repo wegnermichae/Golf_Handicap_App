@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".PlayGolfActivity">
 
+    <View
+        android:id="@+id/divider17"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/holeView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageButton
         android:id="@+id/dashButton5"
         android:layout_width="wrap_content"
@@ -255,7 +264,7 @@
         android:id="@+id/holeView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="136dp"
         app:layout_constraintBottom_toTopOf="@+id/divider16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -328,18 +337,18 @@
         app:layout_constraintStart_toStartOf="@+id/extraStrokes3"
         app:layout_constraintTop_toBottomOf="@+id/extraStrokes3" />
 
-    <EditText
-        android:id="@+id/output"
+    <ListView
+        android:id="@+id/outputListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:ems="10"
-        android:inputType="text"
-        android:singleLine="false"
-        android:textAlignment="viewStart"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/holeView"
+        app:layout_constraintBottom_toTopOf="@+id/divider17"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submitButton" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
