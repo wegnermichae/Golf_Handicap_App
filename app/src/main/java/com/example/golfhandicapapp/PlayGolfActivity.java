@@ -18,31 +18,20 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class PlayGolfActivity extends AppCompatActivity {
-
     Button submitButton;
-
     EditText courseName, golfer1Name, golfer2Name, golfer3Name, golfer4Name, golfer1Handicap,
             golfer2Handicap, golfer3Handicap, golfer4Handicap, golfer1Strokes, golfer2Strokes,
-            golfer3Strokes, golfer4Strokes, output;
-
-
+            golfer3Strokes, golfer4Strokes;
     ListView holeView, outputListView;
     ImageButton dashButton, scoreButton, bagButton, courseButton, playerButton;
-
     ArrayAdapter<String> outputAdapter;
     List<String> outputMessages;
 
     public int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
-
-    public int strokes1, strokes2, strokes3, strokes4;
     public String name1, name2, name3, name4;
-
-    public String holes1, holes2, holes3, holes4;
 
     public void updateExtraStrokes(List<Courses> sorted){
 
@@ -143,67 +132,6 @@ public class PlayGolfActivity extends AppCompatActivity {
         if (strokesInt > -1) {
             textView.setText(MessageFormat.format(format, strokesInt));
         }
-    }
-
-    @NonNull
-    private StringBuilder getStringBuilder(List<Courses> sorted) {
-        StringBuilder holes1 = new StringBuilder();
-        StringBuilder holes2 = new StringBuilder();
-        StringBuilder holes3 = new StringBuilder();
-        StringBuilder holes4 = new StringBuilder();
-
-
-        for (int i = 0; i < golfer1StrokesInt; i++) {
-            if (i > 0) {
-                holes1.append(", ");
-            }
-            holes1.append(sorted.get(i).getHoleNumber());
-        }
-        for(int i = 0; i < golfer2StrokesInt; i++){
-            if(i > 0){
-                holes2.append(", ");
-            }
-            holes2.append(sorted.get(i).getHoleNumber());
-        }
-        for(int i = 0; i < golfer3StrokesInt; i++){
-            if(i > 0){
-                holes3.append(", ");
-            }
-            holes3.append(sorted.get(i).getHoleNumber());
-        }
-        for(int i = 0; i < golfer4StrokesInt; i++){
-            if(i > 0){
-                holes4.append(", ");
-            }
-            holes4.append(sorted.get(i).getHoleNumber());
-        }
-        String strokeMessage = " gets a stroke on hole(s): ";
-        StringBuilder holesMessage = new StringBuilder();
-        if(golfer1StrokesInt > 0){
-            holesMessage.append(name1);
-            holesMessage.append(strokeMessage);
-            holesMessage.append(holes1);
-            holesMessage.append(".\n");
-        }
-        if(golfer2StrokesInt > 0){
-            holesMessage.append(name2);
-            holesMessage.append(strokeMessage);
-            holesMessage.append(holes2);
-            holesMessage.append(".\n");
-        }
-        if(golfer3StrokesInt > 0) {
-            holesMessage.append(name3);
-            holesMessage.append(strokeMessage);
-            holesMessage.append(holes3);
-            holesMessage.append(".\n");
-        }
-        if(golfer4StrokesInt > 0) {
-            holesMessage.append(name4);
-            holesMessage.append(strokeMessage);
-            holesMessage.append(holes4);
-            holesMessage.append(".\n");
-        }
-        return holesMessage;
     }
 
     @Override
