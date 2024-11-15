@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -41,34 +42,88 @@ public class PlayGolfActivity extends AppCompatActivity {
     public String holes1, holes2, holes3, holes4;
 
     public void updateExtraStrokes(List<Courses> sorted){
-        golfer1StrokesInt = Integer.parseInt(golfer1Handicap.getText().toString());
-        golfer2StrokesInt = Integer.parseInt(golfer2Handicap.getText().toString());
-        golfer3StrokesInt = Integer.parseInt(golfer3Handicap.getText().toString());
-        golfer4StrokesInt = Integer.parseInt(golfer4Handicap.getText().toString());
 
-        golfer1Handicap.setText(MessageFormat.format("Handicap: {0}", golfer1StrokesInt));
-        golfer2Handicap.setText(MessageFormat.format("Handicap: {0}", golfer2StrokesInt));
-        golfer3Handicap.setText(MessageFormat.format("Handicap: {0}", golfer3StrokesInt));
-        golfer4Handicap.setText(MessageFormat.format("Handicap: {0}", golfer4StrokesInt));
+        try{
+            golfer1StrokesInt = Integer.parseInt(golfer1Handicap.getText().toString());
+        }catch(Exception e){
+            golfer1StrokesInt = -1;
+        }
+        try{
+            golfer2StrokesInt = Integer.parseInt(golfer2Handicap.getText().toString());
+        }catch(Exception e){
+            golfer2StrokesInt = -1;
+        }
+        try{
+            golfer3StrokesInt = Integer.parseInt(golfer3Handicap.getText().toString());
+        }catch(Exception e){
+            golfer3StrokesInt = -1;
+        }
+        try{
+            golfer4StrokesInt = Integer.parseInt(golfer4Handicap.getText().toString());
+        }catch(Exception e){
+            golfer4StrokesInt = -1;
+        }
 
-        int smallest = Math.min(golfer1StrokesInt, Math.min(golfer2StrokesInt, Math.min(golfer3StrokesInt, golfer4StrokesInt)));
+        //update handicap text if handicap was entered
+        if(golfer1StrokesInt > -1){
+            golfer1Handicap.setText(MessageFormat.format("Handicap: {0}", golfer1StrokesInt));
+        }
+        if(golfer2StrokesInt > -1){
+            golfer2Handicap.setText(MessageFormat.format("Handicap: {0}", golfer2StrokesInt));
+        }
+        if(golfer3StrokesInt > -1){
+            golfer3Handicap.setText(MessageFormat.format("Handicap: {0}", golfer3StrokesInt));
+        }
+        if(golfer4StrokesInt > -1){
+            golfer4Handicap.setText(MessageFormat.format("Handicap: {0}", golfer4StrokesInt));
+        }
+
+        //if strokes is negative, set to max value to avoid being apart of smallest calculation
+        int adjusted1 = golfer1StrokesInt == -1 ? Integer.MAX_VALUE : golfer1StrokesInt;
+        int adjusted2 = golfer2StrokesInt == -1 ? Integer.MAX_VALUE : golfer2StrokesInt;
+        int adjusted3 = golfer3StrokesInt == -1 ? Integer.MAX_VALUE : golfer3StrokesInt;
+        int adjusted4 = golfer4StrokesInt == -1 ? Integer.MAX_VALUE : golfer4StrokesInt;
+
+        int smallest = Math.min(adjusted1, Math.min(adjusted2, Math.min(adjusted3, adjusted4)));
+
 
         golfer1StrokesInt = golfer1StrokesInt - smallest;
         golfer2StrokesInt = golfer2StrokesInt - smallest;
         golfer3StrokesInt = golfer3StrokesInt - smallest;
         golfer4StrokesInt = golfer4StrokesInt - smallest;
 
-        golfer1Strokes.setText(MessageFormat.format("Strokes: {0}", golfer1StrokesInt));
-        golfer2Strokes.setText(MessageFormat.format("Strokes: {0}", golfer2StrokesInt));
-        golfer3Strokes.setText(MessageFormat.format("Strokes: {0}", golfer3StrokesInt));
-        golfer4Strokes.setText(MessageFormat.format("Strokes: {0}", golfer4StrokesInt));
+        //update strokes text if strokes were calculated
+        if(golfer1StrokesInt > -1){
+            golfer1Strokes.setText(MessageFormat.format("Strokes: {0}", golfer1StrokesInt));
+        }
+        if(golfer2StrokesInt > -1){
+            golfer2Strokes.setText(MessageFormat.format("Strokes: {0}", golfer2StrokesInt));
+        }
+        if(golfer3StrokesInt > -1){
+            golfer3Strokes.setText(MessageFormat.format("Strokes: {0}", golfer3StrokesInt));
+        }
+        if(golfer4StrokesInt > -1){
+            golfer4Strokes.setText(MessageFormat.format("Strokes: {0}", golfer4StrokesInt));
+        }
 
+        //gets golfers names
         name1 = golfer1Name.getText().toString();
         name2 = golfer2Name.getText().toString();
         name3 = golfer3Name.getText().toString();
         name4 = golfer4Name.getText().toString();
 
+        StringBuilder holesMessage = getStringBuilder(sorted);
+
+        output.setText(holesMessage.toString());
+    }
+
+    @NonNull
+    private StringBuilder getStringBuilder(List<Courses> sorted) {
         StringBuilder holes1 = new StringBuilder();
+        StringBuilder holes2 = new StringBuilder();
+        StringBuilder holes3 = new StringBuilder();
+        StringBuilder holes4 = new StringBuilder();
+
 
         for (int i = 0; i < golfer1StrokesInt; i++) {
             if (i > 0) {
@@ -76,14 +131,51 @@ public class PlayGolfActivity extends AppCompatActivity {
             }
             holes1.append(sorted.get(i).getHoleNumber());
         }
-
-        output.setText(MessageFormat.format("{0} gets a stroke on hole(s): {1}", name1 , holes1));
-
-    }
-
-    //ensure all of this can handle less than 4 golfers
-    public void updateOutput(List<Courses> sorted) {
-
+        for(int i = 0; i < golfer2StrokesInt; i++){
+            if(i > 0){
+                holes2.append(", ");
+            }
+            holes2.append(sorted.get(i).getHoleNumber());
+        }
+        for(int i = 0; i < golfer3StrokesInt; i++){
+            if(i > 0){
+                holes3.append(", ");
+            }
+            holes3.append(sorted.get(i).getHoleNumber());
+        }
+        for(int i = 0; i < golfer4StrokesInt; i++){
+            if(i > 0){
+                holes4.append(", ");
+            }
+            holes4.append(sorted.get(i).getHoleNumber());
+        }
+        String strokeMessage = " gets a stroke on hole(s): ";
+        StringBuilder holesMessage = new StringBuilder();
+        if(golfer1StrokesInt > 0){
+            holesMessage.append(name1);
+            holesMessage.append(strokeMessage);
+            holesMessage.append(holes1);
+            holesMessage.append(".\n");
+        }
+        if(golfer2StrokesInt > 0){
+            holesMessage.append(name2);
+            holesMessage.append(strokeMessage);
+            holesMessage.append(holes2);
+            holesMessage.append(".\n");
+        }
+        if(golfer3StrokesInt > 0) {
+            holesMessage.append(name3);
+            holesMessage.append(strokeMessage);
+            holesMessage.append(holes3);
+            holesMessage.append(".\n");
+        }
+        if(golfer4StrokesInt > 0) {
+            holesMessage.append(name4);
+            holesMessage.append(strokeMessage);
+            holesMessage.append(holes4);
+            holesMessage.append(".\n");
+        }
+        return holesMessage;
     }
 
     @Override
@@ -131,15 +223,17 @@ public class PlayGolfActivity extends AppCompatActivity {
                 String dbName = courseName.getText().toString();
                 if(!dbName.isEmpty()) {
                     DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(PlayGolfActivity.this, dbName);
-
-                    List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
-                    List<Courses> sorted = dataBaseHelperCourses.getHolesSortedByHandicap();
-                    //output.setText(String.valueOf(sorted.get(0).getHoleNumber()));//this works
-                    updateExtraStrokes(sorted);
-                    ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, everyone);
-                    holeView.setAdapter(courseArrayAdapter);
+                    if (DataBaseHelperCourses.doesDatabaseExist(PlayGolfActivity.this, dbName)) {
+                        List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
+                        List<Courses> sorted = dataBaseHelperCourses.getHolesSortedByHandicap();
+                        updateExtraStrokes(sorted);
+                        ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, everyone);
+                        holeView.setAdapter(courseArrayAdapter);
+                    } else {
+                        courseName.setError("Please enter a course that you have uploaded");
+                    }
                 }else{
-                    courseName.setError("Please enter a name");
+                    courseName.setError("Please enter a course name");
                 }
             }
         });

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,11 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
     public DataBaseHelperCourses(@Nullable Context context, String dbName) {
         super(context, dbName +".db", null, 1);
         this.dbName = dbName;
+    }
+
+    public static boolean doesDatabaseExist(Context context, String dbName) {
+        String path = context.getDatabasePath(dbName + ".db").getPath();
+        return new File(path).exists();
     }
 
     @Override
