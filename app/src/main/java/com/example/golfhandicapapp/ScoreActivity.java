@@ -101,7 +101,6 @@ public class ScoreActivity extends AppCompatActivity {
             DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
             dataBaseHelperScores.deleteOne(scores);
             Toast.makeText(ScoreActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
-
         });
 
 

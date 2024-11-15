@@ -19,7 +19,6 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
     public static final String COURSE_TABLE_NAME = COLUMN_HOLE + "S_TABLE";
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_PAR = "PAR";
-    public static final String COLUMN_SLOPE = "SLOPE";
     public static final String COLUMN_HANDICAP = "HANDICAP";
 
     private String dbName;

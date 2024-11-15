@@ -143,4 +143,79 @@
         android:textSize="60sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="48dp"
+        android:text="Golfer Name"
+        android:textAlignment="center"
+        android:textSize="23sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider10" />
+
+    <EditText
+        android:id="@+id/golferNameEntry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ex. Jeff"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/nameText"
+        app:layout_constraintStart_toStartOf="@+id/nameText"
+        app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
+    <EditText
+        android:id="@+id/golferHandicapEntry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="ex. 5"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/handicapText"
+        app:layout_constraintStart_toStartOf="@+id/handicapText"
+        app:layout_constraintTop_toBottomOf="@+id/handicapText" />
+
+    <TextView
+        android:id="@+id/handicapText"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="48dp"
+        android:text="Golfer Handicap"
+        android:textAlignment="center"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider10" />
+
+    <Button
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="view"
+        app:layout_constraintEnd_toEndOf="@+id/golferNameEntry"
+        app:layout_constraintStart_toStartOf="@+id/golferNameEntry"
+        app:layout_constraintTop_toBottomOf="@+id/golferNameEntry" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="submit"
+        app:layout_constraintEnd_toEndOf="@+id/golferHandicapEntry"
+        app:layout_constraintStart_toStartOf="@+id/golferHandicapEntry"
+        app:layout_constraintTop_toBottomOf="@+id/golferHandicapEntry" />
+
+    <ListView
+        android:id="@+id/playerView"
+        android:layout_width="409dp"
+        android:layout_height="372dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
