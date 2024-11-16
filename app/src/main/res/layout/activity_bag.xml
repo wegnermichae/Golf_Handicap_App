@@ -73,19 +73,19 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/courseText4" />
+        app:layout_constraintEnd_toEndOf="@+id/bagButton4"
+        app:layout_constraintStart_toStartOf="@+id/bagButton4" />
 
     <TextView
         android:id="@+id/courseText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="Courses"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/playerText4" />
+        app:layout_constraintEnd_toEndOf="@+id/courseButton4"
+        app:layout_constraintStart_toStartOf="@+id/courseButton4" />
 
     <TextView
         android:id="@+id/dashText4"
@@ -95,19 +95,19 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/scoreText4"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/dashButton4"
+        app:layout_constraintStart_toStartOf="@+id/dashButton4" />
 
     <TextView
         android:id="@+id/scoreText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="Scores"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/playerText4" />
+        app:layout_constraintEnd_toEndOf="@+id/scoreButton4"
+        app:layout_constraintStart_toStartOf="@+id/scoreButton4" />
 
     <TextView
         android:id="@+id/playerText4"
@@ -117,9 +117,8 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/playerButton4"
+        app:layout_constraintStart_toStartOf="@+id/playerButton4" />
 
     <View
         android:id="@+id/divider13"
@@ -139,4 +138,26 @@
         android:textSize="60sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/clubText"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="32dp"
+        android:text="Club Name"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHeading4" />
+
+    <TextView
+        android:id="@+id/distanceText"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="32dp"
+        android:text="Distance"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider13" />
 </androidx.constraintlayout.widget.ConstraintLayout>

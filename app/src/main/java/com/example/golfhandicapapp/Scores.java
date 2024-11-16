@@ -27,15 +27,6 @@ public class Scores {
     public void setId(int id){
         this.id = id;
     }
-    public void setScore(int score){
-        this.score = score;
-    }
-    public void setCourse(String course){
-        this.course = course;
-        }
-    public void setPlayer(String player){
-        this.player = player;
-    }
 
     @Override
     public String toString(){
