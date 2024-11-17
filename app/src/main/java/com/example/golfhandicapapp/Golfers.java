@@ -32,7 +32,7 @@ public class Golfers {
 
     @Override
     public String toString(){
-        return "Id: " + id + " Name: " + name + " Handicap: " + handicap;
+        return "Name: " + name + " Handicap: " + handicap;
     }
 
 

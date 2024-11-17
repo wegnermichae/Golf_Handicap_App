@@ -30,7 +30,7 @@ public class Scores {
 
     @Override
     public String toString(){
-        return "Id: " + id + " Score: " + score + " Course: " + course + " Player: " + player;
+        return "Score: " + score + " Course: " + course + " Player: " + player;
     }
 
 
