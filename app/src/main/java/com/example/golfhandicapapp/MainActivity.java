@@ -9,7 +9,6 @@ package com.example.golfhandicapapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -68,13 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
         setupButtonNav();
 
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.playButton){
-                    Intent intent = new Intent(MainActivity.this, PlayGolfActivity.class);
-                    startActivity(intent);
-                }
+        playButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.playButton){
+                Intent intent = new Intent(MainActivity.this, PlayGolfActivity.class);
+                startActivity(intent);
             }
         });
     }

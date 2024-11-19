@@ -8,7 +8,6 @@ package com.example.golfhandicapapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,13 +64,10 @@ public class PlayerActivity extends AppCompatActivity {
 
         setupButtonNav();
 
-        ViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.view) {
-                    DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
-                    PlayerView.setAdapter(new ArrayAdapter<Golfers>(PlayerActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperPlayers.getAllGolfers()));
-                }
+        ViewButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.view) {
+                DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
+                PlayerView.setAdapter(new ArrayAdapter<>(PlayerActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperPlayers.getAllGolfers()));
             }
         });
 
@@ -82,21 +78,18 @@ public class PlayerActivity extends AppCompatActivity {
             Toast.makeText(PlayerActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
         });
 
-        SubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.submit) {
-                    Golfers golfers;
-                    try{
-                        golfers = new Golfers(-1, GolferNameEntry.getText().toString(), Integer.parseInt(GolferHandicapEntry.getText().toString()));
-                    }catch (Exception e){
-                        golfers = new Golfers(-1, GolferNameEntry.getText().toString(), 0);
-                    }
-                    DataBaseHelperPlayers dataBaseHelperGolfers = new DataBaseHelperPlayers(PlayerActivity.this);
-                    boolean success = dataBaseHelperGolfers.addOne(golfers);
-                    if (success) {
-                        Toast.makeText(PlayerActivity.this, "Golfer Added", Toast.LENGTH_SHORT).show();
-                    }
+        SubmitButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.submit) {
+                Golfers golfers;
+                try{
+                    golfers = new Golfers(-1, GolferNameEntry.getText().toString(), Integer.parseInt(GolferHandicapEntry.getText().toString()));
+                }catch (Exception e){
+                    golfers = new Golfers(-1, GolferNameEntry.getText().toString(), 0);
+                }
+                DataBaseHelperPlayers dataBaseHelperGolfers = new DataBaseHelperPlayers(PlayerActivity.this);
+                boolean success = dataBaseHelperGolfers.addOne(golfers);
+                if (success) {
+                    Toast.makeText(PlayerActivity.this, "Golfer Added", Toast.LENGTH_SHORT).show();
                 }
             }
         });

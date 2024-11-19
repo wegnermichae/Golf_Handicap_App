@@ -42,23 +42,23 @@ public class PlayGolfActivity extends AppCompatActivity {
     private String name1, name2, name3, name4;
 
 
-    private int updateGolferStrokes(EditText handicapField, TextView strokesField, String format, int golferIndex) {
+    private int updateGolferStrokes(EditText handicapField, TextView strokesField) {
         try{
             int strokes = Integer.parseInt(handicapField.getText().toString());
-            updateHandicapText(strokes, strokesField, format);
+            updateHandicapText(strokes, strokesField, PlayGolfActivity.STROKES_FORMAT);
             return strokes;
         } catch (Exception e){
-            updateHandicapText(-1, strokesField, format);
+            updateHandicapText(-1, strokesField, PlayGolfActivity.STROKES_FORMAT);
             return -1;
         }
     }
 
     public void updateExtraStrokes(List<Courses> sorted){
         //update strokes each golfer gets if handicap was entered
-        golfer1StrokesInt = updateGolferStrokes(golfer1Handicap, golfer1Strokes, STROKES_FORMAT, 1);
-        golfer2StrokesInt = updateGolferStrokes(golfer2Handicap, golfer2Strokes, STROKES_FORMAT, 2);
-        golfer3StrokesInt = updateGolferStrokes(golfer3Handicap, golfer3Strokes, STROKES_FORMAT, 3);
-        golfer4StrokesInt = updateGolferStrokes(golfer4Handicap, golfer4Strokes, STROKES_FORMAT, 4);
+        golfer1StrokesInt = updateGolferStrokes(golfer1Handicap, golfer1Strokes);
+        golfer2StrokesInt = updateGolferStrokes(golfer2Handicap, golfer2Strokes);
+        golfer3StrokesInt = updateGolferStrokes(golfer3Handicap, golfer3Strokes);
+        golfer4StrokesInt = updateGolferStrokes(golfer4Handicap, golfer4Strokes);
 
 
         //update handicap text if handicap was entered

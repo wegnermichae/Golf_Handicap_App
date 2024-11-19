@@ -8,7 +8,6 @@ package com.example.golfhandicapapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,45 +69,39 @@ public class CourseActivity extends AppCompatActivity {
 
         setupButtonNav();
 
-        viewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.viewButton) {
-                    String dbName = nameEntry.getText().toString();
-                    if(!dbName.isEmpty()) {
-                        DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
+        viewButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.viewButton) {
+                String dbName = nameEntry.getText().toString();
+                if(!dbName.isEmpty()) {
+                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
 
-                        List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
+                    List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
 
-                        ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<Courses>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
-                        courseList.setAdapter(courseArrayAdapter);
-                    }else{
-                        nameEntry.setError("Please enter a name");
-                    }
+                    ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
+                    courseList.setAdapter(courseArrayAdapter);
+                }else{
+                    nameEntry.setError("Please enter a name");
                 }
             }
         });
 
-        courseAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.courseAdd) {
-                    Courses courses;
-                    try {
-                        courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
-                    } catch (Exception e) {
-                        courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), 0, 0);
+        courseAdd.setOnClickListener(v -> {
+            if (v.getId() == R.id.courseAdd) {
+                Courses courses;
+                try {
+                    courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
+                } catch (Exception e) {
+                    courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), 0, 0);
+                }
+                String dbName = nameEntry.getText().toString();
+                if (!dbName.isEmpty()) {
+                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
+                    boolean success = dataBaseHelperCourses.addOne(courses);
+                    if (success) {
+                        Toast.makeText(CourseActivity.this, "Hole Added", Toast.LENGTH_SHORT).show();
                     }
-                    String dbName = nameEntry.getText().toString();
-                    if (!dbName.isEmpty()) {
-                        DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
-                        boolean success = dataBaseHelperCourses.addOne(courses);
-                        if (success) {
-                            Toast.makeText(CourseActivity.this, "Hole Added", Toast.LENGTH_SHORT).show();
-                        }
-                    }else{
-                        nameEntry.setError("Please enter a name");
-                    }
+                }else{
+                    nameEntry.setError("Please enter a name");
                 }
             }
         });
