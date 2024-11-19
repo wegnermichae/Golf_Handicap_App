@@ -58,11 +58,7 @@ public class MainActivity extends AppCompatActivity {
         PlayerButton = findViewById(R.id.PlayerButton);
         CourseButton = findViewById(R.id.CourseButton);
         BagButton = findViewById(R.id.BagButton);
-        scoreSeekBar = findViewById(R.id.scoreSeekBar);
-        handicapSeekBar = findViewById(R.id.handicapSeekBar);
         headingText = findViewById(R.id.textHeading);
-        previousScore = findViewById(R.id.previousScore);
-        currentHandicap = findViewById(R.id.currentHandicap);
         playButton = findViewById(R.id.playButton);
 
         setupButtonNav();
