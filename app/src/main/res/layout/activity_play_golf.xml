@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEBCD"
+    tools:context=".PlayGolfActivity">
+
+    <View
+        android:id="@+id/divider17"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/holeView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/dashButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/dashText5"
+        app:layout_constraintEnd_toStartOf="@+id/scoreButton5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/btn_star" />
+
+    <ImageButton
+        android:id="@+id/scoreButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/scoreText5"
+        app:layout_constraintEnd_toStartOf="@+id/playerButton5"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/bagButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/bagText5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/courseButton5"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+
+    <ImageButton
+        android:id="@+id/courseButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/courseText5"
+        app:layout_constraintStart_toEndOf="@+id/playerButton5"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+    <ImageButton
+        android:id="@+id/playerButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/playerText5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+    <TextView
+        android:id="@+id/dashText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dash"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dashButton5"
+        app:layout_constraintStart_toStartOf="@+id/dashButton5" />
+
+    <TextView
+        android:id="@+id/bagText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bag"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bagButton5"
+        app:layout_constraintStart_toStartOf="@+id/bagButton5" />
+
+    <TextView
+        android:id="@+id/courseText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courses"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/courseButton5"
+        app:layout_constraintStart_toStartOf="@+id/courseButton5" />
+
+    <TextView
+        android:id="@+id/scoreText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scores"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scoreButton5"
+        app:layout_constraintStart_toStartOf="@+id/scoreButton5" />
+
+    <TextView
+        android:id="@+id/playerText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Players"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/playerButton5"
+        app:layout_constraintStart_toStartOf="@+id/playerButton5" />
+
+    <View
+        android:id="@+id/divider16"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/playerButton5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/divider15"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHeading6" />
+
+    <TextView
+        android:id="@+id/textHeading6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Golf"
+        android:textSize="60sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/golfer1Name"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Golfer 1"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider15" />
+
+    <EditText
+        android:id="@+id/golfer2Name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Golfer 2"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/golfer1Name"
+        app:layout_constraintStart_toStartOf="@+id/golfer1Name"
+        app:layout_constraintTop_toBottomOf="@+id/golfer1Name" />
+
+    <EditText
+        android:id="@+id/golfer3Name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Golfer 3"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/golfer2Name"
+        app:layout_constraintStart_toStartOf="@+id/golfer2Name"
+        app:layout_constraintTop_toBottomOf="@+id/golfer2Name" />
+
+    <EditText
+        android:id="@+id/golfer4Name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Golfer 4"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/golfer3Name"
+        app:layout_constraintStart_toStartOf="@+id/golfer3Name"
+        app:layout_constraintTop_toBottomOf="@+id/golfer3Name" />
+
+    <EditText
+        android:id="@+id/golfer1Handicap"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Handicap"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/extraStrokes1"
+        app:layout_constraintStart_toEndOf="@+id/golfer1Name"
+        app:layout_constraintTop_toBottomOf="@+id/divider15" />
+
+    <EditText
+        android:id="@+id/golfer2Handicap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Handicap"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/golfer1Handicap"
+        app:layout_constraintStart_toStartOf="@+id/golfer1Handicap"
+        app:layout_constraintTop_toBottomOf="@+id/golfer1Handicap" />
+
+    <EditText
+        android:id="@+id/golfer3Handicap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Handicap"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/golfer2Handicap"
+        app:layout_constraintStart_toStartOf="@+id/golfer2Handicap"
+        app:layout_constraintTop_toBottomOf="@+id/golfer2Handicap" />
+
+    <EditText
+        android:id="@+id/golfer4Handicap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Handicap"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer4Name"
+        app:layout_constraintEnd_toEndOf="@+id/golfer3Handicap"
+        app:layout_constraintStart_toStartOf="@+id/golfer3Handicap"
+        app:layout_constraintTop_toBottomOf="@+id/golfer3Handicap" />
+
+    <EditText
+        android:id="@+id/courseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Course"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/golfer4Handicap" />
+
+    <ListView
+        android:id="@+id/holeView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="136dp"
+        app:layout_constraintBottom_toTopOf="@+id/divider16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submitButton" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseName" />
+
+    <EditText
+        android:id="@+id/extraStrokes1"
+        android:layout_width="128dp"
+        android:layout_height="0dp"
+        android:clickable="false"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer1Handicap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/golfer1Handicap" />
+
+    <EditText
+        android:id="@+id/extraStrokes2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer2Handicap"
+        app:layout_constraintEnd_toEndOf="@+id/extraStrokes1"
+        app:layout_constraintStart_toStartOf="@+id/extraStrokes1"
+        app:layout_constraintTop_toBottomOf="@+id/extraStrokes1" />
+
+    <EditText
+        android:id="@+id/extraStrokes3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer3Handicap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/extraStrokes2"
+        app:layout_constraintTop_toBottomOf="@+id/extraStrokes2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/extraStrokes4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Extra Strokes"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/golfer4Handicap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/extraStrokes3"
+        app:layout_constraintTop_toBottomOf="@+id/extraStrokes3" />
+
+    <ListView
+        android:id="@+id/outputListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/divider17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submitButton" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

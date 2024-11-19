@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFEBCD"
     tools:context=".MainActivity">
 
     <View
@@ -25,8 +26,8 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ScoreText"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/DashButton"
+        app:layout_constraintStart_toStartOf="@+id/DashButton" />
 
     <ImageButton
         android:id="@+id/DashButton"
@@ -82,12 +83,12 @@
         android:id="@+id/ScoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="Scores"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/PlayerText" />
+        app:layout_constraintEnd_toEndOf="@+id/ScoreButton"
+        app:layout_constraintStart_toStartOf="@+id/ScoreButton" />
 
     <TextView
         android:id="@+id/PlayerText"
@@ -97,19 +98,19 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/PlayerButton"
+        app:layout_constraintStart_toStartOf="@+id/PlayerButton" />
 
     <TextView
         android:id="@+id/CourseText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="Courses"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/PlayerText" />
+        app:layout_constraintEnd_toEndOf="@+id/CourseButton"
+        app:layout_constraintStart_toStartOf="@+id/CourseButton" />
 
     <TextView
         android:id="@+id/BagText"
@@ -119,9 +120,8 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toEndOf="@+id/CourseText" />
+        app:layout_constraintEnd_toEndOf="@+id/BagButton"
+        app:layout_constraintStart_toStartOf="@+id/BagButton" />
 
     <View
         android:id="@+id/divider"
@@ -134,7 +134,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/headingText"
+        android:id="@+id/textHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome"
@@ -149,7 +149,7 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headingText" />
+        app:layout_constraintTop_toBottomOf="@+id/textHeading" />
 
     <View
         android:id="@+id/divider3"
@@ -219,5 +219,16 @@
         app:layout_constraintBottom_toTopOf="@+id/divider4"
         app:layout_constraintEnd_toStartOf="@+id/divider6"
         app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:text="Play Golf"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

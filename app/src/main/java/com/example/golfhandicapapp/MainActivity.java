@@ -1,8 +1,16 @@
+/**
+ * Author: Michael Wegner
+ * Class: MainActivity
+ * Purpose: This class will handle the main menu of the application and its interactions
+ */
+
+
 package com.example.golfhandicapapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -13,6 +21,26 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton;
+    SeekBar scoreSeekBar, handicapSeekBar;
+    TextView headingText, previousScore, currentHandicap;
+    Button playButton;
+
+    private void setupButtonNav(){
+        DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
+        ScoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
+        BagButton.setOnClickListener(v -> navigateToActivity(BagActivity.class));
+        CourseButton.setOnClickListener(v -> navigateToActivity(CourseActivity.class));
+        PlayerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
+    }
+
+    private void navigateToActivity(Class<?> activityClass) {
+        Intent intent = new Intent(MainActivity.this, activityClass);
+        startActivity(intent);
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +53,25 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        final ImageButton DashButton = findViewById(R.id.DashButton);
-        final ImageButton ScoreButton = findViewById(R.id.ScoreButton);
-        final ImageButton PlayerButton = findViewById(R.id.PlayerButton);
-        final ImageButton CourseButton = findViewById(R.id.CourseButton);
-        final ImageButton BagButton = findViewById(R.id.BagButton);
-        SeekBar scoreSeekBar = findViewById(R.id.scoreSeekBar);
-        SeekBar handicapSeekBar = findViewById(R.id.handicapSeekBar);
-        TextView headingText = findViewById(R.id.headingText);
-        TextView previousScore = findViewById(R.id.previousScore);
-        TextView currentHandicap = findViewById(R.id.currentHandicap);
+        DashButton = findViewById(R.id.DashButton);
+        ScoreButton = findViewById(R.id.ScoreButton);
+        PlayerButton = findViewById(R.id.PlayerButton);
+        CourseButton = findViewById(R.id.CourseButton);
+        BagButton = findViewById(R.id.BagButton);
+        scoreSeekBar = findViewById(R.id.scoreSeekBar);
+        handicapSeekBar = findViewById(R.id.handicapSeekBar);
+        headingText = findViewById(R.id.textHeading);
+        previousScore = findViewById(R.id.previousScore);
+        currentHandicap = findViewById(R.id.currentHandicap);
+        playButton = findViewById(R.id.playButton);
 
+        setupButtonNav();
+
+        playButton.setOnClickListener(v -> {
+            if (v.getId() == R.id.playButton){
+                Intent intent = new Intent(MainActivity.this, PlayGolfActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

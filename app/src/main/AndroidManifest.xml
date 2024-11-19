@@ -13,18 +13,20 @@
         android:theme="@style/Theme.GolfHandicapApp"
         tools:targetApi="31">
         <activity
-            android:name=".CoursesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GolfersActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ScoresActivity"
+            android:name=".PlayGolfActivity"
             android:exported="false" />
         <activity
             android:name=".BagActivity"
-            android:exported="false"
-            android:theme="@style/Theme.GolfHandicapApp" />
+            android:exported="false" />
+        <activity
+            android:name=".CourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PlayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScoreActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

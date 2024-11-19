@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEBCD"
+    tools:context=".BagActivity">
+
+    <ImageButton
+        android:id="@+id/bagButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/courseButton4"
+        app:layout_constraintTop_toTopOf="@+id/playerButton4"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+
+    <ImageButton
+        android:id="@+id/courseButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toEndOf="@+id/playerButton4"
+        app:layout_constraintTop_toTopOf="@+id/playerButton4"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+    <View
+        android:id="@+id/divider14"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/playerButton4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/dashButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/scoreButton4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scoreButton4"
+        app:srcCompat="@android:drawable/btn_star" />
+
+    <ImageButton
+        android:id="@+id/scoreButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/playerButton4"
+        app:layout_constraintTop_toTopOf="@+id/playerButton4"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/playerButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/playerText4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+    <TextView
+        android:id="@+id/bagText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bag"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bagButton4"
+        app:layout_constraintStart_toStartOf="@+id/bagButton4" />
+
+    <TextView
+        android:id="@+id/courseText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Courses"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/courseButton4"
+        app:layout_constraintStart_toStartOf="@+id/courseButton4" />
+
+    <TextView
+        android:id="@+id/dashText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dash"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dashButton4"
+        app:layout_constraintStart_toStartOf="@+id/dashButton4" />
+
+    <TextView
+        android:id="@+id/scoreText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scores"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scoreButton4"
+        app:layout_constraintStart_toStartOf="@+id/scoreButton4" />
+
+    <TextView
+        android:id="@+id/playerText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Players"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/playerButton4"
+        app:layout_constraintStart_toStartOf="@+id/playerButton4" />
+
+    <View
+        android:id="@+id/divider13"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHeading4" />
+
+    <TextView
+        android:id="@+id/textHeading4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Bag"
+        android:textSize="60sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/clubText"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="32dp"
+        android:text="Club Name"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHeading4" />
+
+    <TextView
+        android:id="@+id/distanceText"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="32dp"
+        android:text="Distance"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider13" />
+
+    <EditText
+        android:id="@+id/clubEntry"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="@+id/clubText"
+        app:layout_constraintStart_toStartOf="@+id/clubText"
+        app:layout_constraintTop_toBottomOf="@+id/clubText" />
+
+    <EditText
+        android:id="@+id/distanceEntry"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="@+id/distanceText"
+        app:layout_constraintStart_toStartOf="@+id/distanceText"
+        app:layout_constraintTop_toBottomOf="@+id/distanceText" />
+
+    <ListView
+        android:id="@+id/clubView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintBottom_toTopOf="@+id/divider14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/distanceEntry" />
+
+    <Button
+        android:id="@+id/viewBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="View"
+        app:layout_constraintEnd_toEndOf="@+id/clubEntry"
+        app:layout_constraintStart_toStartOf="@+id/clubEntry"
+        app:layout_constraintTop_toBottomOf="@+id/clubEntry" />
+
+    <Button
+        android:id="@+id/submitBut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="@+id/distanceEntry"
+        app:layout_constraintStart_toStartOf="@+id/distanceEntry"
+        app:layout_constraintTop_toBottomOf="@+id/distanceEntry" />
+</androidx.constraintlayout.widget.ConstraintLayout>
