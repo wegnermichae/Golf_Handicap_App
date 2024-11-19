@@ -1,3 +1,9 @@
+/**
+ * Author: Michael Wegner
+ * Class: CourseActivity
+ * Purpose: This class will handle the Courses view of the application and its interactions
+ */
+
 package com.example.golfhandicapapp;
 
 import android.content.Intent;
@@ -20,6 +26,24 @@ import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {
 
+    ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton, courseAdd;
+    EditText nameEntry, holeEntry, parEntry, handicapEntry;
+    ListView courseList;
+    Button viewButton;
+
+    private void setupButtonNav(){
+        DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
+        ScoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
+        BagButton.setOnClickListener(v -> navigateToActivity(BagActivity.class));
+        CourseButton.setOnClickListener(v -> navigateToActivity(CourseActivity.class));
+        PlayerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
+    }
+
+    private void navigateToActivity(Class<?> activityClass) {
+        Intent intent = new Intent(CourseActivity.this, activityClass);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,18 +55,20 @@ public class CourseActivity extends AppCompatActivity {
             return insets;
         });
 
-        ImageButton DashButton = findViewById(R.id.dashButton3);
-        ImageButton ScoreButton = findViewById(R.id.scoreButton3);
-        ImageButton PlayerButton = findViewById(R.id.playerButton3);
-        ImageButton CourseButton = findViewById(R.id.courseButton3);
-        ImageButton BagButton = findViewById(R.id.bagButton3);
-        ImageButton courseAdd = findViewById(R.id.courseAdd);
-        EditText nameEntry = findViewById(R.id.nameEntry);
-        EditText holeEntry = findViewById(R.id.holeEntry);
-        EditText parEntry = findViewById(R.id.parEntry);
-        EditText handicapEntry = findViewById(R.id.handicapEntry);
-        ListView courseList = findViewById(R.id.courseList);
-        Button viewButton = findViewById(R.id.viewButton);
+        DashButton = findViewById(R.id.dashButton3);
+        ScoreButton = findViewById(R.id.scoreButton3);
+        PlayerButton = findViewById(R.id.playerButton3);
+        CourseButton = findViewById(R.id.courseButton3);
+        BagButton = findViewById(R.id.bagButton3);
+        courseAdd = findViewById(R.id.courseAdd);
+        nameEntry = findViewById(R.id.nameEntry);
+        holeEntry = findViewById(R.id.holeEntry);
+        parEntry = findViewById(R.id.parEntry);
+        handicapEntry = findViewById(R.id.handicapEntry);
+        courseList = findViewById(R.id.courseList);
+        viewButton = findViewById(R.id.viewButton);
+
+        setupButtonNav();
 
         viewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +88,6 @@ public class CourseActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         courseAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +113,6 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
-
         courseList.setOnItemClickListener((parent, view, position, id) -> {
             Courses courses = (Courses) parent.getItemAtPosition(position);
             String dbName = nameEntry.getText().toString();
@@ -100,64 +124,5 @@ public class CourseActivity extends AppCompatActivity {
                 nameEntry.setError("Please enter a name");
             }
         });
-
-
-
-        //the following listeners will allow for functionality of the specified button clicks
-        DashButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.dashButton3) {
-                    Intent intent = new Intent(CourseActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        ScoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.scoreButton3) {
-                    Intent intent = new Intent(CourseActivity.this, ScoreActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        PlayerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.playerButton3) {
-                    Intent intent = new Intent(CourseActivity.this, PlayerActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        CourseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.courseButton3) {
-                    Intent intent = new Intent(CourseActivity.this, CourseActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        BagButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.bagButton3) {
-                    Intent intent = new Intent(CourseActivity.this, BagActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-
-
-
-
-
     }
 }

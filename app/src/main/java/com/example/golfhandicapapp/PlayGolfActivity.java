@@ -1,3 +1,9 @@
+/**
+ * Author: Michael Wegner
+ * Class: PlayGolfActivity
+ * Purpose: This class will handle the Play Golf view of the application and its interactions
+ */
+
 package com.example.golfhandicapapp;
 
 import android.content.Intent;
@@ -30,37 +36,36 @@ public class PlayGolfActivity extends AppCompatActivity {
     ArrayAdapter<String> outputAdapter;
     List<String> outputMessages;
 
-    public int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
-    public String name1, name2, name3, name4;
+    private static final String HANDICAP_FORMAT = "Handicap: {0}";
+    private static final String STROKES_FORMAT = "Strokes: {0}";
+    private int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
+    private String name1, name2, name3, name4;
+
+
+    private int updateGolferStrokes(EditText handicapField, TextView strokesField, String format, int golferIndex) {
+        try{
+            int strokes = Integer.parseInt(handicapField.getText().toString());
+            updateHandicapText(strokes, strokesField, format);
+            return strokes;
+        } catch (Exception e){
+            updateHandicapText(-1, strokesField, format);
+            return -1;
+        }
+    }
 
     public void updateExtraStrokes(List<Courses> sorted){
+        //update strokes each golfer gets if handicap was entered
+        golfer1StrokesInt = updateGolferStrokes(golfer1Handicap, golfer1Strokes, STROKES_FORMAT, 1);
+        golfer2StrokesInt = updateGolferStrokes(golfer2Handicap, golfer2Strokes, STROKES_FORMAT, 2);
+        golfer3StrokesInt = updateGolferStrokes(golfer3Handicap, golfer3Strokes, STROKES_FORMAT, 3);
+        golfer4StrokesInt = updateGolferStrokes(golfer4Handicap, golfer4Strokes, STROKES_FORMAT, 4);
 
-        try{
-            golfer1StrokesInt = Integer.parseInt(golfer1Handicap.getText().toString());
-        }catch(Exception e){
-            golfer1StrokesInt = -1;
-        }
-        try{
-            golfer2StrokesInt = Integer.parseInt(golfer2Handicap.getText().toString());
-        }catch(Exception e){
-            golfer2StrokesInt = -1;
-        }
-        try{
-            golfer3StrokesInt = Integer.parseInt(golfer3Handicap.getText().toString());
-        }catch(Exception e){
-            golfer3StrokesInt = -1;
-        }
-        try{
-            golfer4StrokesInt = Integer.parseInt(golfer4Handicap.getText().toString());
-        }catch(Exception e){
-            golfer4StrokesInt = -1;
-        }
 
         //update handicap text if handicap was entered
-        updateHandicapText(golfer1StrokesInt, golfer1Handicap, "Handicap: {0}");
-        updateHandicapText(golfer2StrokesInt, golfer2Handicap, "Handicap: {0}");
-        updateHandicapText(golfer3StrokesInt, golfer3Handicap, "Handicap: {0}");
-        updateHandicapText(golfer4StrokesInt, golfer4Handicap, "Handicap: {0}");
+        updateHandicapText(golfer1StrokesInt, golfer1Handicap, HANDICAP_FORMAT);
+        updateHandicapText(golfer2StrokesInt, golfer2Handicap, HANDICAP_FORMAT);
+        updateHandicapText(golfer3StrokesInt, golfer3Handicap, HANDICAP_FORMAT);
+        updateHandicapText(golfer4StrokesInt, golfer4Handicap, HANDICAP_FORMAT);
 
         int smallest = calculateSmallestStrokes();
 
@@ -87,17 +92,13 @@ public class PlayGolfActivity extends AppCompatActivity {
 
     private List<String> generateMessages(List<Courses> sorted) {
         List<String> messages = new ArrayList<>();
-        if (golfer1StrokesInt > 0) {
-            messages.add(name1 + " gets a stroke on hole(s): " + getHoles(sorted, golfer1StrokesInt));
-        }
-        if (golfer2StrokesInt > 0) {
-            messages.add(name2 + " gets a stroke on hole(s): " + getHoles(sorted, golfer2StrokesInt));
-        }
-        if (golfer3StrokesInt > 0) {
-            messages.add(name3 + " gets a stroke on hole(s): " + getHoles(sorted, golfer3StrokesInt));
-        }
-        if (golfer4StrokesInt > 0) {
-            messages.add(name4 + " gets a stroke on hole(s): " + getHoles(sorted, golfer4StrokesInt));
+        int[] strokes = {golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt};
+        String[] names = {name1, name2, name3, name4};
+
+        for(int i = 0; i < 4; i++){
+            if(strokes[i] > 0){
+                messages.add(names[i] + " gets a stroke on hole(s): " + getHoles(sorted, strokes[i]));
+            }
         }
         return messages;
     }
@@ -132,6 +133,19 @@ public class PlayGolfActivity extends AppCompatActivity {
         if (strokesInt > -1) {
             textView.setText(MessageFormat.format(format, strokesInt));
         }
+    }
+
+    private void setupButtonNav(){
+        dashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
+        scoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
+        bagButton.setOnClickListener(v -> navigateToActivity(BagActivity.class));
+        courseButton.setOnClickListener(v -> navigateToActivity(CourseActivity.class));
+        playerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
+    }
+
+    private void navigateToActivity(Class<?> activityClass) {
+        Intent intent = new Intent(PlayGolfActivity.this, activityClass);
+        startActivity(intent);
     }
 
     @Override
@@ -173,6 +187,8 @@ public class PlayGolfActivity extends AppCompatActivity {
 
         holeView = findViewById(R.id.holeView);
 
+        //handle menu button clicks
+        setupButtonNav();
 
         submitButton.setOnClickListener(v -> {
             if (v.getId() == R.id.submitButton) {
@@ -194,46 +210,5 @@ public class PlayGolfActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        //the following listeners will allow for functionality of the specified button clicks
-        dashButton.setOnClickListener(v -> {
-            if (v.getId() == R.id.dashButton5) {
-                Intent intent = new Intent(PlayGolfActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        scoreButton.setOnClickListener(v -> {
-            if (v.getId() == R.id.scoreButton5) {
-                Intent intent = new Intent(PlayGolfActivity.this, ScoreActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        playerButton.setOnClickListener(v -> {
-            if (v.getId() == R.id.playerButton5) {
-                Intent intent = new Intent(PlayGolfActivity.this, PlayerActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        courseButton.setOnClickListener(v -> {
-            if (v.getId() == R.id.courseButton5) {
-                Intent intent = new Intent(PlayGolfActivity.this, CourseActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        bagButton.setOnClickListener(v -> {
-            if (v.getId() == R.id.bagButton5) {
-                Intent intent = new Intent(PlayGolfActivity.this, BagActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
     }
 }

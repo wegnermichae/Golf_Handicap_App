@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFEBCD"
     tools:context=".ScoreActivity">
 
     <View
@@ -25,19 +26,19 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/courseText" />
+        app:layout_constraintEnd_toEndOf="@+id/bagButton2"
+        app:layout_constraintStart_toStartOf="@+id/bagButton2" />
 
     <TextView
         android:id="@+id/courseText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="Courses"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/playerText" />
+        app:layout_constraintEnd_toEndOf="@+id/courseButton2"
+        app:layout_constraintStart_toStartOf="@+id/courseButton2" />
 
     <TextView
         android:id="@+id/dashText"
@@ -47,19 +48,19 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/scoreText"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/dashButton2"
+        app:layout_constraintStart_toStartOf="@+id/dashButton2" />
 
     <TextView
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="Scores"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/playerText" />
+        app:layout_constraintEnd_toEndOf="@+id/scoreButton2"
+        app:layout_constraintStart_toStartOf="@+id/scoreButton2" />
 
     <ImageButton
         android:id="@+id/bagButton2"
@@ -89,9 +90,8 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/playerButton2"
+        app:layout_constraintStart_toStartOf="@+id/playerButton2" />
 
     <ImageButton
         android:id="@+id/scoreButton2"
@@ -238,7 +238,7 @@
         android:id="@+id/viewScores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="view"
+        android:text="View"
         app:layout_constraintBottom_toTopOf="@+id/courseEntry"
         app:layout_constraintEnd_toStartOf="@+id/addButton"
         app:layout_constraintStart_toEndOf="@+id/textHeading2"

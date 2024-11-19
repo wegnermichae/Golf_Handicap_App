@@ -25,7 +25,7 @@ public class Clubs {
     }
 
     public String toString(){
-        return "Name: " + name + " Distance: " + distance + " yds";
+        return "Name: " + name + ", Distance: " + distance + " yds";
     }
 
 }

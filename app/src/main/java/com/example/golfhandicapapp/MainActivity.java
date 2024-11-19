@@ -28,6 +28,19 @@ public class MainActivity extends AppCompatActivity {
     TextView headingText, previousScore, currentHandicap;
     Button playButton;
 
+    private void setupButtonNav(){
+        DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
+        ScoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
+        BagButton.setOnClickListener(v -> navigateToActivity(BagActivity.class));
+        CourseButton.setOnClickListener(v -> navigateToActivity(CourseActivity.class));
+        PlayerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
+    }
+
+    private void navigateToActivity(Class<?> activityClass) {
+        Intent intent = new Intent(MainActivity.this, activityClass);
+        startActivity(intent);
+    }
+
 
 
     @Override
@@ -53,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         currentHandicap = findViewById(R.id.currentHandicap);
         playButton = findViewById(R.id.playButton);
 
+        setupButtonNav();
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,63 +77,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        //the following listeners will allow for functionality of the specified button clicks
-        DashButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.DashButton) {
-                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        ScoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.ScoreButton) {
-                    Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        PlayerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.PlayerButton) {
-                    Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        CourseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.CourseButton) {
-                    Intent intent = new Intent(MainActivity.this, CourseActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        BagButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.BagButton) {
-                    Intent intent = new Intent(MainActivity.this, BagActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-
     }
-
-
-
-
 }

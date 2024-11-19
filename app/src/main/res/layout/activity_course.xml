@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFEBCD"
     tools:context=".CourseActivity">
 
     <ImageButton
@@ -75,19 +76,19 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/courseText3" />
+        app:layout_constraintEnd_toEndOf="@+id/bagButton3"
+        app:layout_constraintStart_toStartOf="@+id/bagButton3" />
 
     <TextView
         android:id="@+id/courseText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="Courses"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/playerText3" />
+        app:layout_constraintEnd_toEndOf="@+id/courseButton3"
+        app:layout_constraintStart_toStartOf="@+id/courseButton3" />
 
     <TextView
         android:id="@+id/dashText3"
@@ -97,19 +98,19 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/scoreText3"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/dashButton3"
+        app:layout_constraintStart_toStartOf="@+id/dashButton3" />
 
     <TextView
         android:id="@+id/scoreText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:text="Scores"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/playerText3" />
+        app:layout_constraintEnd_toEndOf="@+id/scoreButton3"
+        app:layout_constraintStart_toStartOf="@+id/scoreButton3" />
 
     <TextView
         android:id="@+id/playerText3"
@@ -119,9 +120,8 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/playerButton3"
+        app:layout_constraintStart_toStartOf="@+id/playerButton3" />
 
     <View
         android:id="@+id/divider11"
@@ -254,7 +254,7 @@
         android:id="@+id/viewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="view"
+        android:text="View"
         app:layout_constraintBottom_toTopOf="@+id/courseSlopeText"
         app:layout_constraintEnd_toStartOf="@+id/courseAdd"
         app:layout_constraintStart_toEndOf="@+id/textHeading5"

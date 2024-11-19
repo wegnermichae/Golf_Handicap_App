@@ -1,3 +1,9 @@
+/**
+ * Author: Michael Wegner
+ * Class: ScoreActivity
+ * Purpose: This class will handle the Scores view of the application and its interactions
+ */
+
 package com.example.golfhandicapapp;
 
 import android.content.Intent;
@@ -25,7 +31,6 @@ import java.util.List;
 
 public class ScoreActivity extends AppCompatActivity {
 
-
     ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton, AddButton;
     EditText scoreInput, courseInput, playerInput;
     TextView scoreEntry, courseEntry, playerEntry;
@@ -33,7 +38,18 @@ public class ScoreActivity extends AppCompatActivity {
     Button ViewScores;
     ArrayAdapter<Scores> scoreArrayAdapter;
 
-    DataBaseHelperScores dataBaseHelperScores;
+    private void setupButtonNav(){
+        DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
+        ScoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
+        BagButton.setOnClickListener(v -> navigateToActivity(BagActivity.class));
+        CourseButton.setOnClickListener(v -> navigateToActivity(CourseActivity.class));
+        PlayerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
+    }
+
+    private void navigateToActivity(Class<?> activityClass) {
+        Intent intent = new Intent(ScoreActivity.this, activityClass);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +76,8 @@ public class ScoreActivity extends AppCompatActivity {
         courseInput = findViewById(R.id.courseInput);
         playerInput = findViewById(R.id.playerInput);
         ViewScores = findViewById(R.id.viewScores);
+
+        setupButtonNav();
 
         //Handle viewing scores from score database
         ViewScores.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +112,6 @@ public class ScoreActivity extends AppCompatActivity {
             }
         });
 
-
         //Handle deleting score from score database
         ScoreList.setOnItemClickListener((parent, view, position, id) -> {
             Scores scores = (Scores) parent.getItemAtPosition(position);
@@ -102,59 +119,5 @@ public class ScoreActivity extends AppCompatActivity {
             dataBaseHelperScores.deleteOne(scores);
             Toast.makeText(ScoreActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
         });
-
-
-        //The following listeners will allow for functionality of the specified button clicks
-        DashButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.dashButton2) {
-                    Intent intent = new Intent(ScoreActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        ScoreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.scoreButton2) {
-                    Intent intent = new Intent(ScoreActivity.this, ScoreActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        PlayerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.playerButton2) {
-                    Intent intent = new Intent(ScoreActivity.this, PlayerActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        CourseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.courseButton2) {
-                    Intent intent = new Intent(ScoreActivity.this, CourseActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        BagButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getId() == R.id.bagButton2) {
-                    Intent intent = new Intent(ScoreActivity.this, BagActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-
-
     }
 }

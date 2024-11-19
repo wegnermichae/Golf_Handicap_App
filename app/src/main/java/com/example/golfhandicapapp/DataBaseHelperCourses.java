@@ -85,7 +85,7 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
     public List<Courses> getAllHoles(){
         List<Courses> returnList = new ArrayList<>();
 
-        String query = "SELECT * FROM " + COURSE_TABLE_NAME;
+        String query = "SELECT * FROM " + COURSE_TABLE_NAME + " ORDER BY " + COLUMN_HOLE + " ASC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
