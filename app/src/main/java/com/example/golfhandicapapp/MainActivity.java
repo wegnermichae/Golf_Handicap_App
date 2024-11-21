@@ -8,8 +8,10 @@
 package com.example.golfhandicapapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -23,9 +25,11 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton;
-    SeekBar scoreSeekBar, handicapSeekBar;
-    TextView headingText, previousScore, currentHandicap;
-    Button playButton;
+    TextView headingText, mainUser, userHandicap;
+    EditText mainUserName, trackedHandicap;
+    Button playButton, updateUser;
+
+    private String trackedName;
 
     private void setupButtonNav(){
         DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
@@ -60,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
         BagButton = findViewById(R.id.BagButton);
         headingText = findViewById(R.id.textHeading);
         playButton = findViewById(R.id.playButton);
+        updateUser = findViewById(R.id.updateUser);
+        mainUserName = findViewById(R.id.mainUserName);
+        trackedHandicap = findViewById(R.id.trackedHandicap);
 
+        restoreData();
         setupButtonNav();
 
         playButton.setOnClickListener(v -> {
@@ -69,5 +77,42 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        updateUser.setOnClickListener(v -> {
+            if (v.getId() == R.id.updateUser) {
+                DataBaseHelperPlayers db = new DataBaseHelperPlayers(MainActivity.this);
+                String name = mainUserName.getText().toString();
+                int handicap = db.getOneGolfer(name);
+                if (handicap == -1) {
+                    mainUserName.setError("Player not found, Please add them in the Player Menu");
+                    trackedHandicap.setText("");
+                }
+                else {
+                    trackedHandicap.setText(String.valueOf(handicap));
+                    saveData();
+                }
+            }
+        });
     }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("UserName", mainUserName.getText().toString());
+        editor.putString("Handicap", trackedHandicap.getText().toString());
+
+        editor.apply();  // Apply changes asynchronously
+    }
+
+    private void restoreData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE);
+        String savedUserName = sharedPreferences.getString("UserName", "");
+        String savedHandicap = sharedPreferences.getString("Handicap", "");
+
+        mainUserName.setText(savedUserName);
+        trackedHandicap.setText(savedHandicap);
+    }
+
+
 }

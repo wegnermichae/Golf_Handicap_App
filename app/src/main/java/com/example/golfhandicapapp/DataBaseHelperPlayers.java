@@ -64,7 +64,22 @@ public class DataBaseHelperPlayers extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnList;
+    }
 
+    public int getOneGolfer(String name) {
+        int returnHandicap = -1;  // Default value if no match is found
+        String query = "SELECT * FROM " + PLAYER_TABLE_NAME + " WHERE " + COLUMN_NAME + " = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[] {name});  // Use parameterized queries to prevent SQL injection
+
+        if(cursor.moveToFirst()) {
+            // Assuming golfer's name is in the second column and the handicap is in the third
+            returnHandicap = cursor.getInt(2);  // Get the golfer's handicap
+        }
+
+        cursor.close();
+        db.close();
+        return returnHandicap;
     }
 
     public void deleteOne(Golfers golfers) {
@@ -72,5 +87,4 @@ public class DataBaseHelperPlayers extends SQLiteOpenHelper {
         String query = "DELETE FROM " + PLAYER_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + golfers.getId();
         db.execSQL(query);
     }
-
 }
