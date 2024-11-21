@@ -151,8 +151,6 @@ public class PlayerActivity extends AppCompatActivity {
             if (v.getId() == R.id.submit) {
                 Golfers golfers;
                 try{
-                    //change this to update based on calculated value if enough scores are entered
-                    //golfers = new Golfers(-1, GolferNameEntry.getText().toString(), Integer.parseInt(GolferHandicapEntry.getText().toString()));
                     golfers = new Golfers(-1, GolferNameEntry.getText().toString(), calculateHandicapPerRound(GolferNameEntry.getText().toString()));
                 }catch (Exception e){
                     golfers = new Golfers(-1, GolferNameEntry.getText().toString(), 0);
