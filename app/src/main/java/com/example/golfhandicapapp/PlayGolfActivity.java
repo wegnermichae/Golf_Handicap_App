@@ -80,7 +80,7 @@ public class PlayGolfActivity extends AppCompatActivity {
      *
      * @param sorted A sorted list of golf holes for the course.
      */
-    public void updateExtraStrokes(List<Courses> sorted){
+    public void updateExtraStrokes(List<Holes> sorted){
         //update strokes each golfer gets if handicap was entered
         golfer1StrokesInt = updateGolferStrokes(golfer1Handicap, golfer1Strokes);
         golfer2StrokesInt = updateGolferStrokes(golfer2Handicap, golfer2Strokes);
@@ -124,7 +124,7 @@ public class PlayGolfActivity extends AppCompatActivity {
      * @param sorted A sorted list of golf holes for the course.
      * @return A list of messages for each golfer.
      */
-    private List<String> generateMessages(List<Courses> sorted) {
+    private List<String> generateMessages(List<Holes> sorted) {
         List<String> messages = new ArrayList<>();
         int[] strokes = {golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt};
         String[] names = {name1, name2, name3, name4};
@@ -145,7 +145,7 @@ public class PlayGolfActivity extends AppCompatActivity {
      * @return A comma-separated list of hole numbers.
      */
     @NonNull
-    private String getHoles(List<Courses> sorted, int strokes) {
+    private String getHoles(List<Holes> sorted, int strokes) {
         StringBuilder holes = new StringBuilder();
         for (int i = 0; i < strokes; i++) {
             if (i > 0) {
@@ -269,12 +269,12 @@ public class PlayGolfActivity extends AppCompatActivity {
 
                 String dbName = courseName.getText().toString();
                 if(!dbName.isEmpty()) {
-                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(PlayGolfActivity.this, dbName);
-                    if (DataBaseHelperCourses.doesDatabaseExist(PlayGolfActivity.this, dbName)) {
-                        List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
-                        List<Courses> sorted = dataBaseHelperCourses.getHolesSortedByHandicap();
+                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(PlayGolfActivity.this, dbName);
+                    if (DataBaseHelperHoles.doesDatabaseExist(PlayGolfActivity.this, dbName)) {
+                        List<Holes> everyone = dataBaseHelperHoles.getAllHoles();
+                        List<Holes> sorted = dataBaseHelperHoles.getHolesSortedByHandicap();
                         updateExtraStrokes(sorted);
-                        ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, everyone);
+                        ArrayAdapter<Holes> courseArrayAdapter = new ArrayAdapter<>(PlayGolfActivity.this, android.R.layout.simple_list_item_1, everyone);
                         holeView.setAdapter(courseArrayAdapter);
                     } else {
                         courseName.setError("Please enter a course that you have uploaded");

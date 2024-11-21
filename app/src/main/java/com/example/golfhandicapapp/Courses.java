@@ -1,40 +1,57 @@
 package com.example.golfhandicapapp;
 
+import java.util.List;
+
 public class Courses {
 
     public int id;
-    public int holeNumber;
+    public double courseRating;
+    public int slopeRating;
+    public String name;
     public int par;
-    public int handicap;
+    private List<Holes> holes;
 
-    public Courses(int id, int holeNumber, int par, int handicap) {
+    public Courses(int id, double courseRating, int slopeRating, String name, List<Holes> holes) {
         this.id = id;
-        this.holeNumber = holeNumber;
-        this.par = par;
-        this.handicap = handicap;
+        this.courseRating = courseRating;
+        this.slopeRating = slopeRating;
+        this.name = name;
+        this.holes = holes;
     }
 
     public int getId(){
         return id;
     }
-    public int getHoleNumber(){
-        return holeNumber;
+    public double getCourseRating(){
+        return courseRating;
     }
+    public int getSlopeRating(){
+        return slopeRating;
+    }
+    public String getName(){
+        return name;
+    }
+
+    public void setPar(){
+        for(int i = 0; i < holes.size(); i++){
+            par += holes.get(i).getPar();
+        }
+    }
+
     public int getPar(){
         return par;
     }
 
-    public int getHoleHandicap(){
-        return handicap;
+    public List<Holes> getHoles(){
+        return holes;
     }
 
     public void setId(int id){
         this.id = id;
     }
 
-    @Override
-    public String toString(){
-        return "Hole #: " + holeNumber + " Par: " + par +  " Handicap: " + handicap;
+    public void setHoles(List<Holes> holes){
+        this.holes = holes;
     }
 
 }

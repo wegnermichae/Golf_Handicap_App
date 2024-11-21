@@ -3,8 +3,8 @@ package com.example.golfhandicapapp;
 public class Golfers {
     private int id;
     private String name;
-    private int handicap;
-    public Golfers(int id, String name, int handicap){
+    private double handicap;
+    public Golfers(int id, String name, double handicap){
         this.id = id;
         this.name = name;
         this.handicap = handicap;
@@ -16,7 +16,7 @@ public class Golfers {
     public String getName(){
         return name;
     }
-    public int getHandicap(){
+    public double getHandicap(){
         return handicap;
     }
 

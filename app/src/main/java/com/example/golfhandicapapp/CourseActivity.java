@@ -36,10 +36,10 @@ import java.util.List;
 
 public class CourseActivity extends AppCompatActivity {
 
-    ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton, courseAdd;
-    EditText nameEntry, holeEntry, parEntry, handicapEntry;
+    ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton;
+    EditText nameEntry, holeEntry, parEntry, handicapEntry, slopeRatingEntry, courseRatingEntry;
     ListView courseList;
-    Button viewButton;
+    Button viewButton, courseAdd, holeAdd;
 
     /**
      * Sets up the button navigation by defining click listeners for each button that allow the user to navigate
@@ -96,19 +96,42 @@ public class CourseActivity extends AppCompatActivity {
         handicapEntry = findViewById(R.id.handicapEntry);
         courseList = findViewById(R.id.courseList);
         viewButton = findViewById(R.id.viewButton);
+        slopeRatingEntry = findViewById(R.id.slopeRatingEntry);
+        courseRatingEntry = findViewById(R.id.courseRatingEntry);
+        holeAdd = findViewById(R.id.holeAdd);
 
         setupButtonNav();
+
+        courseAdd.setOnClickListener(v -> {
+            if (v.getId() == R.id.courseAdd) {
+                String dbName = nameEntry.getText().toString();
+                DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                Courses courses;
+                try {
+                    courses = new Courses(-1, Double.parseDouble(courseRatingEntry.getText().toString()), Integer.parseInt(slopeRatingEntry.getText().toString()), nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
+                } catch (Exception e) {
+                    courses = new Courses(-1, 0, 0, nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
+                }
+                if (!dbName.isEmpty()) {
+                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                    boolean success = dataBaseHelperCourses.addOne(courses);
+                }else{
+                    nameEntry.setError("Please enter a name");
+                }
+            }
+        });
+
 
         // View button listener to display all holes in the selected course
         viewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.viewButton) {
                 String dbName = nameEntry.getText().toString();
                 if(!dbName.isEmpty()) {
-                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
+                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
 
-                    List<Courses> everyone = dataBaseHelperCourses.getAllHoles();
+                    List<Holes> everyone = dataBaseHelperHoles.getAllHoles();
 
-                    ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
+                    ArrayAdapter<Holes> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
                     courseList.setAdapter(courseArrayAdapter);
                 }else{
                     nameEntry.setError("Please enter a name");
@@ -117,18 +140,18 @@ public class CourseActivity extends AppCompatActivity {
         });
 
         // Add hole button listener to add a new hole to the selected course
-        courseAdd.setOnClickListener(v -> {
-            if (v.getId() == R.id.courseAdd) {
-                Courses courses;
+        holeAdd.setOnClickListener(v -> {
+            if (v.getId() == R.id.holeAdd) {
+                Holes holes;
                 try {
-                    courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
+                    holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
                 } catch (Exception e) {
-                    courses = new Courses(-1, Integer.parseInt(holeEntry.getText().toString()), 0, 0);
+                    holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), 0, 0);
                 }
                 String dbName = nameEntry.getText().toString();
                 if (!dbName.isEmpty()) {
-                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
-                    boolean success = dataBaseHelperCourses.addOne(courses);
+                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                    boolean success = dataBaseHelperHoles.addOne(holes);
                     if (success) {
                         Toast.makeText(CourseActivity.this, "Hole Added", Toast.LENGTH_SHORT).show();
                     }
@@ -140,11 +163,11 @@ public class CourseActivity extends AppCompatActivity {
 
         // List item click listener to delete a selected hole from the course
         courseList.setOnItemClickListener((parent, view, position, id) -> {
-            Courses courses = (Courses) parent.getItemAtPosition(position);
+            Holes holes = (Holes) parent.getItemAtPosition(position);
             String dbName = nameEntry.getText().toString();
             if(!dbName.isEmpty()) {
-                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this, dbName);
-                dataBaseHelperCourses.deleteOne(courses);
+                DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                dataBaseHelperHoles.deleteOne(holes);
                 Toast.makeText(CourseActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
             }else{
                 nameEntry.setError("Please enter a name");

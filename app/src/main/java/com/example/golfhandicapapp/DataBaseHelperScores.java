@@ -73,6 +73,27 @@ public class DataBaseHelperScores extends SQLiteOpenHelper {
         return returnList;
     }
 
+    public List<Scores> getScoresByPlayer(String player){
+        List<Scores> returnList = new ArrayList<>();
+        String query = "SELECT * FROM " + SCORES_TABLE_NAME + " WHERE " + COLUMN_PLAYER + " = '" + player + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            do{
+                int scorerID = cursor.getInt(0);
+                int score = cursor.getInt(1);
+                String course = cursor.getString(2);
+                String playerName = cursor.getString(3);
+                Scores newScores = new Scores(scorerID, score, course, playerName);
+                returnList.add(newScores);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+
     public void deleteOne(Scores score){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + SCORES_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + score.getId();

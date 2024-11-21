@@ -146,21 +146,11 @@
         android:id="@+id/courseList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="256dp"
         app:layout_constraintBottom_toTopOf="@+id/divider12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider11" />
-
-    <ImageButton
-        android:id="@+id/courseAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/divider11"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/courseNameText"
@@ -176,88 +166,157 @@
         android:id="@+id/courseParText"
         android:layout_width="96dp"
         android:layout_height="64dp"
-        android:layout_marginEnd="-24dp"
         android:text="Hole Number"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/playerButton3"
-        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+        app:layout_constraintBottom_toTopOf="@+id/holeEntry"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/courseSlopeText"
         android:layout_width="96dp"
         android:layout_height="64dp"
-        android:layout_marginStart="-24dp"
+        android:layout_marginStart="16dp"
         android:text="Hole Par"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/playerButton3"
-        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+        app:layout_constraintBottom_toTopOf="@+id/parEntry"
+        app:layout_constraintStart_toEndOf="@+id/courseParText" />
 
     <TextView
         android:id="@+id/courseHandText"
         android:layout_width="96dp"
         android:layout_height="64dp"
+        android:layout_marginStart="16dp"
         android:text="Hole Handicap"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider11" />
+        app:layout_constraintBottom_toTopOf="@+id/handicapEntry"
+        app:layout_constraintStart_toEndOf="@+id/courseSlopeText" />
 
     <EditText
         android:id="@+id/nameEntry"
         android:layout_width="96dp"
-        android:layout_height="0dp"
+        android:layout_height="64dp"
         android:ems="10"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/courseList"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseNameText" />
 
     <EditText
         android:id="@+id/holeEntry"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="64dp"
         android:ems="10"
         android:inputType="text"
         android:text="ex. 1"
         app:layout_constraintBottom_toTopOf="@+id/courseList"
         app:layout_constraintEnd_toEndOf="@+id/courseParText"
-        app:layout_constraintStart_toStartOf="@+id/courseParText"
-        app:layout_constraintTop_toBottomOf="@+id/courseParText" />
+        app:layout_constraintStart_toStartOf="@+id/courseParText" />
 
     <EditText
         android:id="@+id/parEntry"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="64dp"
         android:ems="10"
         android:inputType="text"
         android:text="ex. 5"
         app:layout_constraintBottom_toTopOf="@+id/courseList"
         app:layout_constraintEnd_toEndOf="@+id/courseSlopeText"
-        app:layout_constraintStart_toStartOf="@+id/courseSlopeText"
-        app:layout_constraintTop_toBottomOf="@+id/courseSlopeText" />
+        app:layout_constraintStart_toStartOf="@+id/courseSlopeText" />
 
     <EditText
         android:id="@+id/handicapEntry"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="64dp"
         android:ems="10"
         android:inputType="text"
         android:text="ex. 2"
         app:layout_constraintBottom_toTopOf="@+id/courseList"
         app:layout_constraintEnd_toEndOf="@+id/courseHandText"
-        app:layout_constraintStart_toStartOf="@+id/courseHandText"
-        app:layout_constraintTop_toBottomOf="@+id/courseHandText" />
+        app:layout_constraintStart_toStartOf="@+id/courseHandText" />
 
     <Button
         android:id="@+id/viewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View"
+        app:layout_constraintBottom_toBottomOf="@+id/courseHandText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/slopeRatingEntry"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/courseRating"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:text="Course Rating"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/courseNameText"
+        app:layout_constraintEnd_toEndOf="@+id/courseSlopeText"
+        app:layout_constraintStart_toEndOf="@+id/courseParText"
+        app:layout_constraintTop_toTopOf="@+id/courseNameText" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:text="Slope Rating"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/courseRating"
+        app:layout_constraintEnd_toEndOf="@+id/courseHandText"
+        app:layout_constraintStart_toEndOf="@+id/courseRating"
+        app:layout_constraintTop_toTopOf="@+id/courseRating" />
+
+    <EditText
+        android:id="@+id/courseRatingEntry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/courseSlopeText"
-        app:layout_constraintEnd_toStartOf="@+id/courseAdd"
-        app:layout_constraintStart_toEndOf="@+id/textHeading5"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/courseSlopeText"
+        app:layout_constraintStart_toEndOf="@+id/nameEntry"
+        app:layout_constraintTop_toBottomOf="@+id/courseRating" />
+
+    <EditText
+        android:id="@+id/slopeRatingEntry"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/courseHandText"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/courseRatingEntry"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/courseAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintBottom_toTopOf="@+id/courseHandText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/holeAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="@+id/handicapEntry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/courseHandText"
+        app:layout_constraintTop_toTopOf="@+id/courseHandText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

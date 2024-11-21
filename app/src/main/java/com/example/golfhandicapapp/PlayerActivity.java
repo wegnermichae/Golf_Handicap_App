@@ -30,6 +30,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerActivity extends AppCompatActivity {
 
     ImageButton DashButton, ScoreButton, PlayerButton, CourseButton, BagButton;
@@ -57,6 +60,40 @@ public class PlayerActivity extends AppCompatActivity {
     private void navigateToActivity(Class<?> activityClass) {
         Intent intent = new Intent(PlayerActivity.this, activityClass);
         startActivity(intent);
+    }
+
+    public double calculateHandicapPerRound(String player){
+        List<Scores> playerScores;
+        List<Double> indexies = new ArrayList<>();
+        int score;
+        int slopeRating;
+        double courseRating;
+        int par;
+        String course;
+        double adjustedScore;
+        double index;
+        int CONSTANT = 113;
+        DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(PlayerActivity.this);
+        DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(PlayerActivity.this);
+        playerScores = dataBaseHelperScores.getScoresByPlayer(player);
+        for(int i = 0; i < playerScores.size(); i++){
+            course = playerScores.get(i).getCourse();
+            DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(PlayerActivity.this, course);
+            score = playerScores.get(i).getScore();
+            slopeRating = dataBaseHelperCourses.getCourseSlope(course);
+            courseRating = dataBaseHelperCourses.getCourseRating(course);
+            par = dataBaseHelperHoles.getAllPar();
+            adjustedScore = score - (courseRating - par);
+            index = ((adjustedScore - courseRating)/slopeRating)*CONSTANT;
+            indexies.add(index);
+        }
+        double finalIndex;
+        double sum = 0;
+        for(int i = 0; i < indexies.size(); i++){
+            sum += indexies.get(i);
+        }
+        finalIndex = sum/indexies.size();
+        return finalIndex;
     }
 
     /**
@@ -106,7 +143,7 @@ public class PlayerActivity extends AppCompatActivity {
             Golfers golfers = (Golfers) parent.getItemAtPosition(position);
             DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
             dataBaseHelperPlayers.deleteOne(golfers);
-            Toast.makeText(PlayerActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PlayerActivity.this, "Handicap Deleted", Toast.LENGTH_SHORT).show();
         });
 
         // Submit button listener to add a new golfer
@@ -114,7 +151,9 @@ public class PlayerActivity extends AppCompatActivity {
             if (v.getId() == R.id.submit) {
                 Golfers golfers;
                 try{
-                    golfers = new Golfers(-1, GolferNameEntry.getText().toString(), Integer.parseInt(GolferHandicapEntry.getText().toString()));
+                    //change this to update based on calculated value if enough scores are entered
+                    //golfers = new Golfers(-1, GolferNameEntry.getText().toString(), Integer.parseInt(GolferHandicapEntry.getText().toString()));
+                    golfers = new Golfers(-1, GolferNameEntry.getText().toString(), calculateHandicapPerRound(GolferNameEntry.getText().toString()));
                 }catch (Exception e){
                     golfers = new Golfers(-1, GolferNameEntry.getText().toString(), 0);
                 }
