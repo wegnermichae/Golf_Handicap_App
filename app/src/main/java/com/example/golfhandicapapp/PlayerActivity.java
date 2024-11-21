@@ -1,7 +1,17 @@
 /**
+ * PlayerActivity handles the Players view of the Golf Handicap App, allowing users to view, add, and delete golfers.
+ * This activity interacts with the database to store and retrieve golfer information, including their names and handicaps.
+ * It also provides navigation to other parts of the app through buttons.
+ * <p>
+ * The user can add golfers with their names and handicaps, view all golfers in the system, and delete golfers from the list.
+ * The activity uses a list view to display golfer data, and each action (view, add, delete) is triggered by specific buttons.
+ * </p>
+ * <p>
  * Author: Michael Wegner
  * Class: PlayerActivity
- * Purpose: This class will handle the Players view of the application and its interactions
+ * Purpose: To manage the display of golfers, handle user input for golfer details, and provide CRUD operations
+ *         for managing golfers in the app.
+ * </p>
  */
 
 package com.example.golfhandicapapp;
@@ -27,6 +37,10 @@ public class PlayerActivity extends AppCompatActivity {
     EditText GolferNameEntry, GolferHandicapEntry;
     ListView PlayerView;
 
+    /**
+     * Sets up the button navigation by defining click listeners for each button that allow the user to navigate
+     * to different activities in the app.
+     */
     private void setupButtonNav(){
         DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
         ScoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
@@ -35,22 +49,37 @@ public class PlayerActivity extends AppCompatActivity {
         PlayerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
     }
 
+    /**
+     * Navigates to the specified activity when a button is pressed.
+     *
+     * @param activityClass The class of the activity to navigate to.
+     */
     private void navigateToActivity(Class<?> activityClass) {
         Intent intent = new Intent(PlayerActivity.this, activityClass);
         startActivity(intent);
     }
 
+    /**
+     * Initializes the PlayerActivity, setting up the user interface elements, restoring system bar insets for padding,
+     * and setting up button navigation. It also defines click listeners for the 'View' and 'Submit' buttons, handling
+     * user input for adding and displaying golfers.
+     *
+     * @param savedInstanceState A bundle containing the activity's previously saved state (if any).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_player);
+
+        // Sets up padding for system bars like status and navigation bar.
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        // Initialize UI components
         DashButton = findViewById(R.id.dashButton);
         ScoreButton = findViewById(R.id.scoreButton);
         PlayerButton = findViewById(R.id.playerButton);
@@ -64,6 +93,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         setupButtonNav();
 
+        // View button listener to display all golfers
         ViewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.view) {
                 DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
@@ -71,6 +101,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
+        // List item click listener to delete a selected golfer
         PlayerView.setOnItemClickListener((parent, view, position, id) -> {
             Golfers golfers = (Golfers) parent.getItemAtPosition(position);
             DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
@@ -78,6 +109,7 @@ public class PlayerActivity extends AppCompatActivity {
             Toast.makeText(PlayerActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
         });
 
+        // Submit button listener to add a new golfer
         SubmitButton.setOnClickListener(v -> {
             if (v.getId() == R.id.submit) {
                 Golfers golfers;

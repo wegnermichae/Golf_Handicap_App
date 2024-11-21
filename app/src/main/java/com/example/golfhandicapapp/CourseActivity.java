@@ -1,7 +1,18 @@
 /**
+ * CourseActivity handles the Courses view of the Golf Handicap App, allowing users to view, add, and delete golf holes
+ * associated with a specific golf course. This activity interacts with the database to store and retrieve information about
+ * golf courses and their corresponding holes. It also provides navigation to other parts of the app through buttons.
+ * <p>
+ * The user can add holes with specific details (hole number, par, and handicap), view all holes of a selected course,
+ * and delete holes from the list. The activity uses a list view to display course data, and each action (view, add, delete)
+ * is triggered by specific buttons.
+ * </p>
+ * <p>
  * Author: Michael Wegner
  * Class: CourseActivity
- * Purpose: This class will handle the Courses view of the application and its interactions
+ * Purpose: To manage the display of golf courses, handle user input for course details, and provide CRUD operations
+ *         for managing golf holes in a selected course.
+ * </p>
  */
 
 package com.example.golfhandicapapp;
@@ -30,6 +41,10 @@ public class CourseActivity extends AppCompatActivity {
     ListView courseList;
     Button viewButton;
 
+    /**
+     * Sets up the button navigation by defining click listeners for each button that allow the user to navigate
+     * to different activities in the app.
+     */
     private void setupButtonNav(){
         DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
         ScoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
@@ -38,22 +53,37 @@ public class CourseActivity extends AppCompatActivity {
         PlayerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
     }
 
+    /**
+     * Navigates to the specified activity when a button is pressed.
+     *
+     * @param activityClass The class of the activity to navigate to.
+     */
     private void navigateToActivity(Class<?> activityClass) {
         Intent intent = new Intent(CourseActivity.this, activityClass);
         startActivity(intent);
     }
 
+    /**
+     * Initializes the CourseActivity, setting up the user interface elements, restoring system bar insets for padding,
+     * and setting up button navigation. It also defines click listeners for the 'View' and 'Add Hole' buttons, handling
+     * user input for adding and displaying golf holes in a course.
+     *
+     * @param savedInstanceState A bundle containing the activity's previously saved state (if any).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_course);
+
+        // Sets up padding for system bars like status and navigation bar.
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        // Initialize UI components
         DashButton = findViewById(R.id.dashButton3);
         ScoreButton = findViewById(R.id.scoreButton3);
         PlayerButton = findViewById(R.id.playerButton3);
@@ -69,6 +99,7 @@ public class CourseActivity extends AppCompatActivity {
 
         setupButtonNav();
 
+        // View button listener to display all holes in the selected course
         viewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.viewButton) {
                 String dbName = nameEntry.getText().toString();
@@ -85,6 +116,7 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
+        // Add hole button listener to add a new hole to the selected course
         courseAdd.setOnClickListener(v -> {
             if (v.getId() == R.id.courseAdd) {
                 Courses courses;
@@ -106,6 +138,7 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
+        // List item click listener to delete a selected hole from the course
         courseList.setOnItemClickListener((parent, view, position, id) -> {
             Courses courses = (Courses) parent.getItemAtPosition(position);
             String dbName = nameEntry.getText().toString();

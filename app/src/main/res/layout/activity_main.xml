@@ -216,6 +216,7 @@
         android:ems="10"
         android:inputType="text"
         android:text="Name"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/divider4"
         app:layout_constraintStart_toEndOf="@+id/divider5" />
