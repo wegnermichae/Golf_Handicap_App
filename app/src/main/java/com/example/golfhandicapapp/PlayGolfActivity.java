@@ -1,7 +1,19 @@
 /**
+ * PlayGolfActivity handles the Play Golf view of the Golf Handicap App, where users can enter golfer details,
+ * view hole information, and calculate extra strokes based on their handicaps.
+ * This activity interacts with the database to retrieve and display golf course and hole data,
+ * and also calculates and displays the strokes golfers receive for each hole.
+ * <p>
+ * The user can input golfer names and handicaps, submit the data, and the activity will display the relevant information
+ * such as the calculated strokes each golfer gets on specific holes. It also updates the list view with messages about the golfers' strokes.
+ * The activity provides navigation to other sections of the app through various buttons.
+ * </p>
+ * <p>
  * Author: Michael Wegner
  * Class: PlayGolfActivity
- * Purpose: This class will handle the Play Golf view of the application and its interactions
+ * Purpose: To manage the Play Golf view, calculate golfer strokes based on their handicap,
+ *         and provide navigation to other parts of the app.
+ * </p>
  */
 
 package com.example.golfhandicapapp;
@@ -36,12 +48,21 @@ public class PlayGolfActivity extends AppCompatActivity {
     ArrayAdapter<String> outputAdapter;
     List<String> outputMessages;
 
+    // Constants for formatting
     private static final String HANDICAP_FORMAT = "Handicap: {0}";
     private static final String STROKES_FORMAT = "Strokes: {0}";
+
+    // Golfer data variables
     private int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
     private String name1, name2, name3, name4;
 
-
+    /**
+     * Updates the strokes for a golfer based on the entered handicap.
+     *
+     * @param handicapField The EditText field for the golfer's handicap.
+     * @param strokesField The TextView to display the calculated strokes.
+     * @return The calculated number of strokes.
+     */
     private int updateGolferStrokes(EditText handicapField, TextView strokesField) {
         try{
             int strokes = Integer.parseInt(handicapField.getText().toString());
@@ -53,13 +74,18 @@ public class PlayGolfActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Updates the strokes for each golfer based on their handicaps and recalculates strokes
+     * relative to the smallest number of strokes.
+     *
+     * @param sorted A sorted list of golf holes for the course.
+     */
     public void updateExtraStrokes(List<Courses> sorted){
         //update strokes each golfer gets if handicap was entered
         golfer1StrokesInt = updateGolferStrokes(golfer1Handicap, golfer1Strokes);
         golfer2StrokesInt = updateGolferStrokes(golfer2Handicap, golfer2Strokes);
         golfer3StrokesInt = updateGolferStrokes(golfer3Handicap, golfer3Strokes);
         golfer4StrokesInt = updateGolferStrokes(golfer4Handicap, golfer4Strokes);
-
 
         //update handicap text if handicap was entered
         updateHandicapText(golfer1StrokesInt, golfer1Handicap, HANDICAP_FORMAT);
@@ -69,27 +95,35 @@ public class PlayGolfActivity extends AppCompatActivity {
 
         int smallest = calculateSmallestStrokes();
 
+        // Adjust strokes based on smallest number
         golfer1StrokesInt = golfer1StrokesInt - smallest;
         golfer2StrokesInt = golfer2StrokesInt - smallest;
         golfer3StrokesInt = golfer3StrokesInt - smallest;
         golfer4StrokesInt = golfer4StrokesInt - smallest;
 
-        //update strokes text if strokes were calculated
+        // Update strokes text if strokes were calculated
         updateHandicapText(golfer1StrokesInt, golfer1Strokes, "Strokes: {0}");
         updateHandicapText(golfer2StrokesInt, golfer2Strokes, "Strokes: {0}");
         updateHandicapText(golfer3StrokesInt, golfer3Strokes, "Strokes: {0}");
         updateHandicapText(golfer4StrokesInt, golfer4Strokes, "Strokes: {0}");
 
-        //gets golfers names
+        // Gets golfers names
         name1 = golfer1Name.getText().toString();
         name2 = golfer2Name.getText().toString();
         name3 = golfer3Name.getText().toString();
         name4 = golfer4Name.getText().toString();
 
+        // Generate and update messages
         List<String> messages = generateMessages(sorted);
         updateListView(messages);
     }
 
+    /**
+     * Generates a list of messages for each golfer indicating which holes they get a stroke on.
+     *
+     * @param sorted A sorted list of golf holes for the course.
+     * @return A list of messages for each golfer.
+     */
     private List<String> generateMessages(List<Courses> sorted) {
         List<String> messages = new ArrayList<>();
         int[] strokes = {golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt};
@@ -103,6 +137,13 @@ public class PlayGolfActivity extends AppCompatActivity {
         return messages;
     }
 
+    /**
+     * Returns a string representing the holes that a golfer gets strokes on.
+     *
+     * @param sorted A sorted list of golf holes.
+     * @param strokes The number of strokes the golfer receives.
+     * @return A comma-separated list of hole numbers.
+     */
     @NonNull
     private String getHoles(List<Courses> sorted, int strokes) {
         StringBuilder holes = new StringBuilder();
@@ -115,12 +156,22 @@ public class PlayGolfActivity extends AppCompatActivity {
         return holes.toString();
     }
 
+    /**
+     * Updates the ListView to display the generated messages.
+     *
+     * @param messages The list of messages to display.
+     */
     private void updateListView(List<String> messages) {
         outputMessages.clear();
         outputMessages.addAll(messages);
         outputAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Calculates the smallest number of strokes among the four golfers.
+     *
+     * @return The smallest number of strokes.
+     */
     private int calculateSmallestStrokes() {
         int adjusted1 = golfer1StrokesInt == -1 ? Integer.MAX_VALUE : golfer1StrokesInt;
         int adjusted2 = golfer2StrokesInt == -1 ? Integer.MAX_VALUE : golfer2StrokesInt;
@@ -129,12 +180,22 @@ public class PlayGolfActivity extends AppCompatActivity {
         return Math.min(adjusted1, Math.min(adjusted2, Math.min(adjusted3, adjusted4)));
     }
 
+    /**
+     * Updates the given TextView with the formatted handicap or strokes text.
+     *
+     * @param strokesInt The number of strokes or handicap value.
+     * @param textView The TextView to update.
+     * @param format The format string to apply to the value.
+     */
     private void updateHandicapText(int strokesInt, TextView textView, String format) {
         if (strokesInt > -1) {
             textView.setText(MessageFormat.format(format, strokesInt));
         }
     }
 
+    /**
+     * Sets up navigation buttons to allow the user to navigate to different activities within the app.
+     */
     private void setupButtonNav(){
         dashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
         scoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
@@ -143,22 +204,35 @@ public class PlayGolfActivity extends AppCompatActivity {
         playerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
     }
 
+    /**
+     * Navigates to the specified activity.
+     *
+     * @param activityClass The class of the activity to navigate to.
+     */
     private void navigateToActivity(Class<?> activityClass) {
         Intent intent = new Intent(PlayGolfActivity.this, activityClass);
         startActivity(intent);
     }
 
+    /**
+     * Initializes the activity, sets up the UI elements, and handles button clicks.
+     *
+     * @param savedInstanceState The saved instance state of the activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_play_golf);
+
+        // Apply system bar insets for proper padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        // Initialize UI components
         dashButton = findViewById(R.id.dashButton5);
         scoreButton = findViewById(R.id.scoreButton5);
         bagButton = findViewById(R.id.bagButton5);
@@ -187,9 +261,9 @@ public class PlayGolfActivity extends AppCompatActivity {
 
         holeView = findViewById(R.id.holeView);
 
-        //handle menu button clicks
         setupButtonNav();
 
+        // Set up the submit button click listener
         submitButton.setOnClickListener(v -> {
             if (v.getId() == R.id.submitButton) {
 

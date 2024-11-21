@@ -1,7 +1,16 @@
 /**
+ * BagActivity handles the 'Bag' function of the Golf Handicap App, allowing users to manage their golf clubs.
+ * This activity enables users to add new clubs to their golf bag, view existing clubs, and delete clubs.
+ * It also includes navigation to other sections of the app through various buttons.
+ * <p>
+ * The user can input club names and their corresponding distances, view a list of clubs in their bag, and remove clubs.
+ * The activity utilizes a ListView to display the clubs in the user's bag and provides buttons for submitting and viewing clubs.
+ * </p>
+ * <p>
  * Author: Michael Wegner
  * Class: BagActivity
- * Purpose: This class will handle the 'Bag' function of the application and its interactions
+ * Purpose: To manage the 'Bag' function of the app, including adding, viewing, and deleting golf clubs.
+ * </p>
  */
 
 package com.example.golfhandicapapp;
@@ -28,6 +37,10 @@ public class BagActivity extends AppCompatActivity {
     Button submitButton, viewButton;
     ListView clubView;
 
+    /**
+     * Sets up the button navigation to other activities in the app.
+     * Each button navigates to a specific activity when clicked.
+     */
     private void setupButtonNav(){
         DashButton.setOnClickListener(v -> navigateToActivity(MainActivity.class));
         ScoreButton.setOnClickListener(v -> navigateToActivity(ScoreActivity.class));
@@ -36,22 +49,40 @@ public class BagActivity extends AppCompatActivity {
         PlayerButton.setOnClickListener(v -> navigateToActivity(PlayerActivity.class));
     }
 
+    /**
+     * Navigates to the specified activity.
+     *
+     * @param activityClass The class of the activity to navigate to.
+     */
     private void navigateToActivity(Class<?> activityClass) {
         Intent intent = new Intent(BagActivity.this, activityClass);
         startActivity(intent);
     }
 
+    /**
+     * Initializes the activity, sets up the layout, views, and buttons,
+     * and configures the functionality for adding, viewing, and deleting clubs.
+     * <p>
+     * This method is called when the activity is created. It initializes the views for club entry,
+     * sets up button actions for submitting and viewing clubs, and configures a ListView to display the clubs.
+     * </p>
+     *
+     * @param savedInstanceState A Bundle containing the activity's previously saved state.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_bag);
+
+        // Apply system bar insets for proper padding
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        // Initialize buttons, input fields, and ListView for displaying clubs
         DashButton = findViewById(R.id.dashButton4);
         ScoreButton = findViewById(R.id.scoreButton4);
         PlayerButton = findViewById(R.id.playerButton4);
@@ -65,6 +96,7 @@ public class BagActivity extends AppCompatActivity {
 
         setupButtonNav();
 
+        // Handle viewing clubs from the club database
         viewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.viewBut) {
                 DataBaseHelperClubs dataBaseHelperClubs = new DataBaseHelperClubs(BagActivity.this);
@@ -72,6 +104,7 @@ public class BagActivity extends AppCompatActivity {
             }
         });
 
+        // Handle deleting a club from the club database
         clubView.setOnItemClickListener((parent, view, position, id) -> {
             Clubs clubs = (Clubs) parent.getItemAtPosition(position);
             DataBaseHelperClubs dataBaseHelperClubs = new DataBaseHelperClubs(BagActivity.this);
@@ -79,6 +112,7 @@ public class BagActivity extends AppCompatActivity {
             Toast.makeText(BagActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
         });
 
+        // Handle submitting a new club to the club database
         submitButton.setOnClickListener(v -> {
             if (v.getId() == R.id.submitBut) {
                 Clubs clubs;
