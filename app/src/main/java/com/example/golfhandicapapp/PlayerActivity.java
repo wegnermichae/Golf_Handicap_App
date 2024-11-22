@@ -62,38 +62,40 @@ public class PlayerActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public double calculateHandicapPerRound(String player){
-        List<Scores> playerScores;
-        List<Double> indexies = new ArrayList<>();
-        int score;
-        int slopeRating;
-        double courseRating;
-        int par;
-        String course;
-        double adjustedScore;
-        double index;
-        int CONSTANT = 113;
-        DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(PlayerActivity.this);
-        DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(PlayerActivity.this);
-        playerScores = dataBaseHelperScores.getScoresByPlayer(player);
-        for(int i = 0; i < playerScores.size(); i++){
-            course = playerScores.get(i).getCourse();
-            DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(PlayerActivity.this, course);
-            score = playerScores.get(i).getScore();
-            slopeRating = dataBaseHelperCourses.getCourseSlope(course);
-            courseRating = dataBaseHelperCourses.getCourseRating(course);
-            par = dataBaseHelperHoles.getAllPar();
-            adjustedScore = score - (courseRating - par);
-            index = ((adjustedScore - courseRating)/slopeRating)*CONSTANT;
-            indexies.add(index);
+    /**
+     * Calculates handicap given the rounds a player has input into the app.
+     *
+     * @param player - The name of the player the function will calculate handicap for
+     * @return - The calculated handicap for the players rounds and course information (double)
+     */
+    public double calculateHandicapPerRound(String player) {
+        final int CONSTANT = 113;
+        DataBaseHelperScores dbScores = new DataBaseHelperScores(PlayerActivity.this);
+        DataBaseHelperCourses dbCourses = new DataBaseHelperCourses(PlayerActivity.this);
+
+        // Retrieve all scores for the player
+        List<Scores> playerScores = dbScores.getScoresByPlayer(player);
+
+        // Calculate indexes
+        double totalIndex = 0;
+        for (Scores scoreEntry : playerScores) {
+            String course = scoreEntry.getCourse();
+            int score = scoreEntry.getScore();
+
+            // Retrieve course details
+            int slopeRating = dbCourses.getCourseSlope(course);
+            double courseRating = dbCourses.getCourseRating(course);
+
+            // Calculate adjusted score and index
+            int par = new DataBaseHelperHoles(PlayerActivity.this, course).getAllPar();
+            double adjustedScore = score - (courseRating - par);
+            double index = ((adjustedScore - courseRating) / slopeRating) * CONSTANT;
+
+            totalIndex += index;
         }
-        double finalIndex;
-        double sum = 0;
-        for(int i = 0; i < indexies.size(); i++){
-            sum += indexies.get(i);
-        }
-        finalIndex = sum/indexies.size();
-        return finalIndex;
+
+        // Return average index or 0 if no scores exist
+        return playerScores.isEmpty() ? 0 : totalIndex / playerScores.size();
     }
 
     /**

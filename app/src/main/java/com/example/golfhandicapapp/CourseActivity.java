@@ -115,6 +115,9 @@ public class CourseActivity extends AppCompatActivity {
                 if (!dbName.isEmpty()) {
                     DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
                     boolean success = dataBaseHelperCourses.addOne(courses);
+                    if (success) {
+                        Toast.makeText(CourseActivity.this, "Course Added", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     nameEntry.setError("Please enter a name");
                 }
