@@ -31,6 +31,28 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
     }
 
+    public boolean courseExists(String courseName) {
+        SQLiteDatabase db = this.getReadableDatabase(); // Get a readable database instance
+        Cursor cursor = null;
+        try {
+            // Query the database to check if the course exists
+            cursor = db.query(
+                    COURSE_TABLE_NAME,              // Table name
+                    new String[]{COLUMN_NAME},      // Column to retrieve
+                    COLUMN_NAME + " = ?",           // WHERE clause
+                    new String[]{courseName},       // Arguments for WHERE clause
+                    null, null, null                // Group By, Having, Order By
+            );
+
+            // Check if the cursor contains any results
+            return cursor.moveToFirst();       // Returns true if a matching record exists
+        } finally {
+            if (cursor != null) {
+                cursor.close();                // Ensure the cursor is closed to avoid memory leaks
+            }
+        }
+    }
+
     public boolean addOne(Courses courses){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();

@@ -128,16 +128,23 @@ public class CourseActivity extends AppCompatActivity {
         // View button listener to display all holes in the selected course
         viewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.viewButton) {
-                String dbName = nameEntry.getText().toString();
-                if(!dbName.isEmpty()) {
-                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                String dbName = nameEntry.getText().toString().trim(); // Trim to remove extra spaces
+                if (!dbName.isEmpty()) {
+                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
 
-                    List<Holes> everyone = dataBaseHelperHoles.getAllHoles();
+                    // Check if the course exists
+                    if (dataBaseHelperCourses.courseExists(dbName)) {
+                        DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
 
-                    ArrayAdapter<Holes> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
-                    courseList.setAdapter(courseArrayAdapter);
-                }else{
-                    nameEntry.setError("Please enter a name");
+                        // Retrieve and display the list of holes for the course
+                        List<Holes> everyone = dataBaseHelperHoles.getAllHoles();
+                        ArrayAdapter<Holes> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
+                        courseList.setAdapter(courseArrayAdapter);
+                    } else {
+                        nameEntry.setError("Enter a name that matches an existing course or tap 'Add' to create a new course.");
+                    }
+                } else {
+                    nameEntry.setError("Please enter a course name.");
                 }
             }
         });
