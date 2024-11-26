@@ -106,20 +106,25 @@ public class CourseActivity extends AppCompatActivity {
             if (v.getId() == R.id.courseAdd) {
                 String dbName = nameEntry.getText().toString();
                 DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
-                Courses courses;
-                try {
-                    courses = new Courses(-1, Double.parseDouble(courseRatingEntry.getText().toString()), Integer.parseInt(slopeRatingEntry.getText().toString()), nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
-                } catch (Exception e) {
-                    courses = new Courses(-1, 0, 0, nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                if (dataBaseHelperCourses.courseExists(dbName)) {
+                    nameEntry.setError("Course already exists");
                 }
-                if (!dbName.isEmpty()) {
-                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
-                    boolean success = dataBaseHelperCourses.addOne(courses);
-                    if (success) {
-                        Toast.makeText(CourseActivity.this, "Course Added", Toast.LENGTH_SHORT).show();
+                else {
+                    Courses courses;
+                    try {
+                        courses = new Courses(-1, Double.parseDouble(courseRatingEntry.getText().toString()), Integer.parseInt(slopeRatingEntry.getText().toString()), nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
+                        if (!dbName.isEmpty()) {
+                            boolean success = dataBaseHelperCourses.addOne(courses);
+                            if (success) {
+                                Toast.makeText(CourseActivity.this, "Course Added", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            nameEntry.setError("Please enter a name");
+                        }
+                    } catch (Exception e) {
+                        nameEntry.setError("Please enter all course information before adding a course.");
                     }
-                }else{
-                    nameEntry.setError("Please enter a name");
                 }
             }
         });
@@ -129,8 +134,8 @@ public class CourseActivity extends AppCompatActivity {
         viewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.viewButton) {
                 String dbName = nameEntry.getText().toString().trim(); // Trim to remove extra spaces
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
                 if (!dbName.isEmpty()) {
-                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
 
                     // Check if the course exists
                     if (dataBaseHelperCourses.courseExists(dbName)) {
@@ -142,8 +147,12 @@ public class CourseActivity extends AppCompatActivity {
                         courseList.setAdapter(courseArrayAdapter);
                     } else {
                         nameEntry.setError("Enter a name that matches an existing course or tap 'Add' to create a new course.");
+                        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
+                        courseList.setAdapter(courseArrayAdapter);
                     }
                 } else {
+                    ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
+                    courseList.setAdapter(courseArrayAdapter);
                     nameEntry.setError("Please enter a course name.");
                 }
             }

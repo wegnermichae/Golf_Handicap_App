@@ -120,16 +120,21 @@ public class ScoreActivity extends AppCompatActivity {
         AddButton.setOnClickListener(v -> {
             if (v.getId() == R.id.addButton) {
                 Scores score;
-                try {
-                    score = new Scores(-1, Integer.parseInt(scoreInput.getText().toString()), courseInput.getText().toString(), playerInput.getText().toString());
-                } catch (Exception e) {
-                    score = new Scores(-1, 0, "Null", "Null");
-                }
-                DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
-                boolean success = dataBaseHelperScores.addOne(score);
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(ScoreActivity.this);
+                if(!dataBaseHelperCourses.courseExists(courseInput.getText().toString())){
+                    courseInput.setError("Course information not saved, Enter Course In Courses Tab then Try Again");
+                }else {
+                    try {
+                        score = new Scores(-1, Integer.parseInt(scoreInput.getText().toString()), courseInput.getText().toString(), playerInput.getText().toString());
+                    } catch (Exception e) {
+                        score = new Scores(-1, 0, "Null", "Null");
+                    }
+                    DataBaseHelperScores dataBaseHelperScores = new DataBaseHelperScores(ScoreActivity.this);
+                    boolean success = dataBaseHelperScores.addOne(score);
 
-                if (success) {
-                    Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
+                    if (success) {
+                        Toast.makeText(ScoreActivity.this, "Score Added", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
