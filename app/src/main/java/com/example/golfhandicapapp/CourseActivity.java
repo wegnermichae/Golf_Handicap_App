@@ -161,21 +161,26 @@ public class CourseActivity extends AppCompatActivity {
         // Add hole button listener to add a new hole to the selected course
         holeAdd.setOnClickListener(v -> {
             if (v.getId() == R.id.holeAdd) {
-                Holes holes;
-                try {
-                    holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
-                } catch (Exception e) {
-                    holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), 0, 0);
-                }
-                String dbName = nameEntry.getText().toString();
-                if (!dbName.isEmpty()) {
-                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
-                    boolean success = dataBaseHelperHoles.addOne(holes);
-                    if (success) {
-                        Toast.makeText(CourseActivity.this, "Hole Added", Toast.LENGTH_SHORT).show();
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                if (!dataBaseHelperCourses.courseExists(nameEntry.getText().toString())) {
+                    nameEntry.setError("Enter a name that matches an existing course or tap 'Add' to create a new course.");
+                } else {
+                    Holes holes;
+                    try {
+                        holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
+                        String dbName = nameEntry.getText().toString();
+                        if (!dbName.isEmpty()) {
+                            DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                            boolean success = dataBaseHelperHoles.addOne(holes);
+                            if (success) {
+                                Toast.makeText(CourseActivity.this, "Hole Added", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            nameEntry.setError("Please enter a name");
+                        }
+                    } catch (Exception e) {
+                        holeEntry.setError("Please enter all hole information before adding a hole.");
                     }
-                }else{
-                    nameEntry.setError("Please enter a name");
                 }
             }
         });

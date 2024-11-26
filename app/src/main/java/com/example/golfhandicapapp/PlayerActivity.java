@@ -153,7 +153,11 @@ public class PlayerActivity extends AppCompatActivity {
             if (v.getId() == R.id.submit) {
                 Golfers golfers;
                 try{
-                    golfers = new Golfers(-1, GolferNameEntry.getText().toString(), calculateHandicapPerRound(GolferNameEntry.getText().toString()));
+                    if(GolferHandicapEntry.getText().toString() != ""){
+                        golfers = new Golfers(-1, GolferNameEntry.getText().toString(), Integer.parseInt(GolferHandicapEntry.getText().toString()));
+                    }else{
+                        golfers = new Golfers(-1, GolferNameEntry.getText().toString(), calculateHandicapPerRound(GolferNameEntry.getText().toString()));
+                    }
                 }catch (Exception e){
                     golfers = new Golfers(-1, GolferNameEntry.getText().toString(), 0);
                 }
