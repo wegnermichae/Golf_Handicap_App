@@ -99,6 +99,21 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     /**
+     * Updates handicap calculation each time method is called
+     */
+    public void updateHandicaps(){
+        DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
+
+        List<Golfers> golfers = dataBaseHelperPlayers.getAllGolfers();
+
+        for (Golfers golfer : golfers) {
+            double handicap = calculateHandicapPerRound(golfer.getName());
+            golfer.setHandicap((int)handicap);
+            dataBaseHelperPlayers.addOne(golfer);
+        }
+    }
+
+    /**
      * Initializes the PlayerActivity, setting up the user interface elements, restoring system bar insets for padding,
      * and setting up button navigation. It also defines click listeners for the 'View' and 'Submit' buttons, handling
      * user input for adding and displaying golfers.
@@ -135,6 +150,7 @@ public class PlayerActivity extends AppCompatActivity {
         // View button listener to display all golfers
         ViewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.view) {
+                updateHandicaps();
                 DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
                 PlayerView.setAdapter(new ArrayAdapter<>(PlayerActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperPlayers.getAllGolfers()));
             }
@@ -145,6 +161,7 @@ public class PlayerActivity extends AppCompatActivity {
             Golfers golfers = (Golfers) parent.getItemAtPosition(position);
             DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayerActivity.this);
             dataBaseHelperPlayers.deleteOne(golfers);
+            updateHandicaps();
             Toast.makeText(PlayerActivity.this, "Handicap Deleted", Toast.LENGTH_SHORT).show();
         });
 
@@ -153,7 +170,7 @@ public class PlayerActivity extends AppCompatActivity {
             if (v.getId() == R.id.submit) {
                 Golfers golfers;
                 try{
-                    if(GolferHandicapEntry.getText().toString() != ""){
+                    if(GolferHandicapEntry.getText().toString() != "ex. 5"){
                         golfers = new Golfers(-1, GolferNameEntry.getText().toString(), Integer.parseInt(GolferHandicapEntry.getText().toString()));
                     }else{
                         golfers = new Golfers(-1, GolferNameEntry.getText().toString(), calculateHandicapPerRound(GolferNameEntry.getText().toString()));
