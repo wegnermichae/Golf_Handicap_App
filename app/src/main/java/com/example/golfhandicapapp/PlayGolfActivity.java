@@ -49,8 +49,8 @@ public class PlayGolfActivity extends AppCompatActivity {
     List<String> outputMessages;
 
     // Constants for formatting
-    private static final String HANDICAP_FORMAT = "Handicap: {0}";
-    private static final String STROKES_FORMAT = "Strokes: {0}";
+    private static final String HANDICAP_FORMAT = "{0}";
+    private static final String STROKES_FORMAT = "{0}";
 
     // Golfer data variables
     private int golfer1StrokesInt, golfer2StrokesInt, golfer3StrokesInt, golfer4StrokesInt;
@@ -81,11 +81,32 @@ public class PlayGolfActivity extends AppCompatActivity {
      * @param sorted A sorted list of golf holes for the course.
      */
     public void updateExtraStrokes(List<Holes> sorted){
+
+        // Gets golfers names
+        name1 = golfer1Name.getText().toString();
+        name2 = golfer2Name.getText().toString();
+        name3 = golfer3Name.getText().toString();
+        name4 = golfer4Name.getText().toString();
+
         //update strokes each golfer gets if handicap was entered
         golfer1StrokesInt = updateGolferStrokes(golfer1Handicap, golfer1Strokes);
         golfer2StrokesInt = updateGolferStrokes(golfer2Handicap, golfer2Strokes);
         golfer3StrokesInt = updateGolferStrokes(golfer3Handicap, golfer3Strokes);
         golfer4StrokesInt = updateGolferStrokes(golfer4Handicap, golfer4Strokes);
+
+        DataBaseHelperPlayers dataBaseHelperPlayers = new DataBaseHelperPlayers(PlayGolfActivity.this);
+        if(dataBaseHelperPlayers.getOneGolfer(name1) != -1){
+            golfer1StrokesInt = dataBaseHelperPlayers.getOneGolfer(name1);
+        }
+        if(dataBaseHelperPlayers.getOneGolfer(name2) != -1){
+            golfer2StrokesInt = dataBaseHelperPlayers.getOneGolfer(name2);
+        }
+        if(dataBaseHelperPlayers.getOneGolfer(name3) != -1){
+            golfer3StrokesInt = dataBaseHelperPlayers.getOneGolfer(name3);
+        }
+        if(dataBaseHelperPlayers.getOneGolfer(name4) != -1){
+            golfer4StrokesInt = dataBaseHelperPlayers.getOneGolfer(name4);
+        }
 
         //update handicap text if handicap was entered
         updateHandicapText(golfer1StrokesInt, golfer1Handicap, HANDICAP_FORMAT);
@@ -102,16 +123,10 @@ public class PlayGolfActivity extends AppCompatActivity {
         golfer4StrokesInt = golfer4StrokesInt - smallest;
 
         // Update strokes text if strokes were calculated
-        updateHandicapText(golfer1StrokesInt, golfer1Strokes, "Strokes: {0}");
-        updateHandicapText(golfer2StrokesInt, golfer2Strokes, "Strokes: {0}");
-        updateHandicapText(golfer3StrokesInt, golfer3Strokes, "Strokes: {0}");
-        updateHandicapText(golfer4StrokesInt, golfer4Strokes, "Strokes: {0}");
-
-        // Gets golfers names
-        name1 = golfer1Name.getText().toString();
-        name2 = golfer2Name.getText().toString();
-        name3 = golfer3Name.getText().toString();
-        name4 = golfer4Name.getText().toString();
+        updateHandicapText(golfer1StrokesInt, golfer1Strokes, "{0}");
+        updateHandicapText(golfer2StrokesInt, golfer2Strokes, "{0}");
+        updateHandicapText(golfer3StrokesInt, golfer3Strokes, "{0}");
+        updateHandicapText(golfer4StrokesInt, golfer4Strokes, "{0}");
 
         // Generate and update messages
         List<String> messages = generateMessages(sorted);

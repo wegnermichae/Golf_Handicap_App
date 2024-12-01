@@ -106,17 +106,25 @@ public class CourseActivity extends AppCompatActivity {
             if (v.getId() == R.id.courseAdd) {
                 String dbName = nameEntry.getText().toString();
                 DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
-                Courses courses;
-                try {
-                    courses = new Courses(-1, Double.parseDouble(courseRatingEntry.getText().toString()), Integer.parseInt(slopeRatingEntry.getText().toString()), nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
-                } catch (Exception e) {
-                    courses = new Courses(-1, 0, 0, nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                if (dataBaseHelperCourses.courseExists(dbName)) {
+                    nameEntry.setError("Course already exists");
                 }
-                if (!dbName.isEmpty()) {
-                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
-                    boolean success = dataBaseHelperCourses.addOne(courses);
-                }else{
-                    nameEntry.setError("Please enter a name");
+                else {
+                    Courses courses;
+                    try {
+                        courses = new Courses(-1, Double.parseDouble(courseRatingEntry.getText().toString()), Integer.parseInt(slopeRatingEntry.getText().toString()), nameEntry.getText().toString(), dataBaseHelperHoles.getAllHoles());
+                        if (!dbName.isEmpty()) {
+                            boolean success = dataBaseHelperCourses.addOne(courses);
+                            if (success) {
+                                Toast.makeText(CourseActivity.this, "Course Added", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            nameEntry.setError("Please enter a name");
+                        }
+                    } catch (Exception e) {
+                        nameEntry.setError("Please enter all course information before adding a course.");
+                    }
                 }
             }
         });
@@ -125,16 +133,27 @@ public class CourseActivity extends AppCompatActivity {
         // View button listener to display all holes in the selected course
         viewButton.setOnClickListener(v -> {
             if (v.getId() == R.id.viewButton) {
-                String dbName = nameEntry.getText().toString();
-                if(!dbName.isEmpty()) {
-                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                String dbName = nameEntry.getText().toString().trim(); // Trim to remove extra spaces
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                if (!dbName.isEmpty()) {
 
-                    List<Holes> everyone = dataBaseHelperHoles.getAllHoles();
+                    // Check if the course exists
+                    if (dataBaseHelperCourses.courseExists(dbName)) {
+                        DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
 
-                    ArrayAdapter<Holes> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
+                        // Retrieve and display the list of holes for the course
+                        List<Holes> everyone = dataBaseHelperHoles.getAllHoles();
+                        ArrayAdapter<Holes> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
+                        courseList.setAdapter(courseArrayAdapter);
+                    } else {
+                        nameEntry.setError("Enter a name that matches an existing course or tap 'Add' to create a new course.");
+                        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
+                        courseList.setAdapter(courseArrayAdapter);
+                    }
+                } else {
+                    ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
                     courseList.setAdapter(courseArrayAdapter);
-                }else{
-                    nameEntry.setError("Please enter a name");
+                    nameEntry.setError("Please enter a course name.");
                 }
             }
         });
@@ -142,21 +161,26 @@ public class CourseActivity extends AppCompatActivity {
         // Add hole button listener to add a new hole to the selected course
         holeAdd.setOnClickListener(v -> {
             if (v.getId() == R.id.holeAdd) {
-                Holes holes;
-                try {
-                    holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
-                } catch (Exception e) {
-                    holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), 0, 0);
-                }
-                String dbName = nameEntry.getText().toString();
-                if (!dbName.isEmpty()) {
-                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
-                    boolean success = dataBaseHelperHoles.addOne(holes);
-                    if (success) {
-                        Toast.makeText(CourseActivity.this, "Hole Added", Toast.LENGTH_SHORT).show();
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                if (!dataBaseHelperCourses.courseExists(nameEntry.getText().toString())) {
+                    nameEntry.setError("Enter a name that matches an existing course or tap 'Add' to create a new course.");
+                } else {
+                    Holes holes;
+                    try {
+                        holes = new Holes(-1, Integer.parseInt(holeEntry.getText().toString()), Integer.parseInt(parEntry.getText().toString()), Integer.parseInt(handicapEntry.getText().toString()));
+                        String dbName = nameEntry.getText().toString();
+                        if (!dbName.isEmpty()) {
+                            DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                            boolean success = dataBaseHelperHoles.addOne(holes);
+                            if (success) {
+                                Toast.makeText(CourseActivity.this, "Hole Added", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            nameEntry.setError("Please enter a name");
+                        }
+                    } catch (Exception e) {
+                        holeEntry.setError("Please enter all hole information before adding a hole.");
                     }
-                }else{
-                    nameEntry.setError("Please enter a name");
                 }
             }
         });

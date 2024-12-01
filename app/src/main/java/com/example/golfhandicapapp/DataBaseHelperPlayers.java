@@ -1,5 +1,6 @@
 package com.example.golfhandicapapp;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -32,15 +33,45 @@ public class DataBaseHelperPlayers extends SQLiteOpenHelper {
 
     }
 
-    public boolean addOne(Golfers golfers){
+    public boolean addOne(Golfers golfers) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_NAME, golfers.getName());
         cv.put(COLUMN_HANDICAP, golfers.getHandicap());
 
-        long insert = db.insert(PLAYER_TABLE_NAME, null, cv);
-        return insert != -1;
+        // Check if the golfer already exists
+        Cursor cursor = db.query(
+                PLAYER_TABLE_NAME,
+                new String[]{COLUMN_HANDICAP}, // Only fetch the handicap column
+                COLUMN_NAME + " = ?",
+                new String[]{golfers.getName()},
+                null, null, null
+        );
+
+        if (cursor.moveToFirst()) {
+            // Existing golfer found, check if score needs an update
+            @SuppressLint("Range") int currentHandicap = cursor.getInt(cursor.getColumnIndex(COLUMN_HANDICAP));
+            if (currentHandicap != golfers.getHandicap()) {
+                // Update the existing golfer's handicap
+                int rowsUpdated = db.update(
+                        PLAYER_TABLE_NAME,
+                        cv,
+                        COLUMN_NAME + " = ?",
+                        new String[]{golfers.getName()}
+                );
+                cursor.close();
+                return rowsUpdated > 0;
+            }
+            cursor.close();
+            // No update needed if the score is the same
+            return true;
+        } else {
+            // No existing golfer, perform an insert
+            cursor.close();
+            long insert = db.insert(PLAYER_TABLE_NAME, null, cv);
+            return insert != -1;
+        }
     }
 
     public List<Golfers> getAllGolfers(){

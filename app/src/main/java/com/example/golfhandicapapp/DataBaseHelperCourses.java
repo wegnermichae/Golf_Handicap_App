@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
     public static final String COLUMN_NAME = "NAME";
@@ -29,6 +32,28 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public boolean courseExists(String courseName) {
+        SQLiteDatabase db = this.getReadableDatabase(); // Get a readable database instance
+        Cursor cursor = null;
+        try {
+            // Query the database to check if the course exists
+            cursor = db.query(
+                    COURSE_TABLE_NAME,              // Table name
+                    new String[]{COLUMN_NAME},      // Column to retrieve
+                    COLUMN_NAME + " = ?",           // WHERE clause
+                    new String[]{courseName},       // Arguments for WHERE clause
+                    null, null, null                // Group By, Having, Order By
+            );
+
+            // Check if the cursor contains any results
+            return cursor.moveToFirst();       // Returns true if a matching record exists
+        } finally {
+            if (cursor != null) {
+                cursor.close();                // Ensure the cursor is closed to avoid memory leaks
+            }
+        }
     }
 
     public boolean addOne(Courses courses){
@@ -68,5 +93,36 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnRating;
+    }
+
+    public List<String> getAllCourseNames() {
+        List<String> courseNames = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            // Query to get all course names from the table
+            cursor = db.query(
+                    COURSE_TABLE_NAME,    // Table name
+                    new String[]{COLUMN_NAME},   // Column to retrieve
+                    null,                // No WHERE clause
+                    null,                // No selection args
+                    null,                // No GROUP BY
+                    null,                // No HAVING
+                    null                 // No ORDER BY
+            );
+
+            // Loop through the cursor to add course names to the list
+            while (cursor.moveToNext()) {
+                courseNames.add(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close(); // Close the cursor to avoid memory leaks
+            }
+            db.close(); // Close the database connection
+        }
+
+        return courseNames; // Return the list of course names
     }
 }
