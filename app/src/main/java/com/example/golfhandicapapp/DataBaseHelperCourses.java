@@ -1,5 +1,6 @@
 package com.example.golfhandicapapp;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -95,6 +96,7 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
         return returnRating;
     }
 
+    @SuppressLint("Range")
     public List<String> getAllCourseNames() {
         List<String> courseNames = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -125,4 +127,12 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
         return courseNames; // Return the list of course names
     }
+
+    public void deleteOne(Courses courses){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + courses.getId();
+        db.execSQL(query);
+    }
+
+
 }

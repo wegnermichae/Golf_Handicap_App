@@ -136,7 +136,6 @@ public class CourseActivity extends AppCompatActivity {
                 String dbName = nameEntry.getText().toString().trim(); // Trim to remove extra spaces
                 DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
                 if (!dbName.isEmpty()) {
-
                     // Check if the course exists
                     if (dataBaseHelperCourses.courseExists(dbName)) {
                         DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
@@ -187,13 +186,24 @@ public class CourseActivity extends AppCompatActivity {
 
         // List item click listener to delete a selected hole from the course
         courseList.setOnItemClickListener((parent, view, position, id) -> {
-            Holes holes = (Holes) parent.getItemAtPosition(position);
+            Object item = parent.getItemAtPosition(position);
             String dbName = nameEntry.getText().toString();
-            if(!dbName.isEmpty()) {
-                DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
-                dataBaseHelperHoles.deleteOne(holes);
-                Toast.makeText(CourseActivity.this, "Score Deleted", Toast.LENGTH_SHORT).show();
-            }else{
+
+            if (!dbName.isEmpty()) {
+                if (item instanceof Holes) {
+                    Holes holes = (Holes) item;
+                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                    dataBaseHelperHoles.deleteOne(holes);
+                    Toast.makeText(CourseActivity.this, "Hole Deleted", Toast.LENGTH_SHORT).show();
+                } else if (item instanceof Courses) {
+                    Courses courses = (Courses) item;
+                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                    dataBaseHelperCourses.deleteOne(courses);
+                    Toast.makeText(CourseActivity.this, "Course Deleted", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CourseActivity.this, "Unknown item type", Toast.LENGTH_SHORT).show();
+                }
+            } else {
                 nameEntry.setError("Please enter a name");
             }
         });
