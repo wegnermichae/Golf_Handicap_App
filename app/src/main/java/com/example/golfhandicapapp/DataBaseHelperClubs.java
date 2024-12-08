@@ -47,7 +47,7 @@ public class DataBaseHelperClubs extends SQLiteOpenHelper {
     public List<Clubs> getAllClubs(){
         List<Clubs> returnList = new ArrayList<>();
 
-        String query = " SELECT * FROM " + CLUB_TABLE_NAME;
+        String query = " SELECT * FROM " + CLUB_TABLE_NAME + " ORDER BY " + COLUMN_DISTANCE + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
