@@ -37,24 +37,24 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
 
     public boolean courseExists(String courseName) {
         SQLiteDatabase db = this.getReadableDatabase(); // Get a readable database instance
-        Cursor cursor = null;
-        try {
+        try (Cursor cursor = db.query(
+                COURSE_TABLE_NAME,              // Table name
+                new String[]{COLUMN_NAME},      // Column to retrieve
+                COLUMN_NAME + " = ?",           // WHERE clause
+                new String[]{courseName},       // Arguments for WHERE clause
+                null, null, null                // Group By, Having, Order By
+        )) {
             // Query the database to check if the course exists
-            cursor = db.query(
-                    COURSE_TABLE_NAME,              // Table name
-                    new String[]{COLUMN_NAME},      // Column to retrieve
-                    COLUMN_NAME + " = ?",           // WHERE clause
-                    new String[]{courseName},       // Arguments for WHERE clause
-                    null, null, null                // Group By, Having, Order By
-            );
+            // Table name
+            // Column to retrieve
+            // WHERE clause
+            // Arguments for WHERE clause
+            // Group By, Having, Order By
 
             // Check if the cursor contains any results
             return cursor.moveToFirst();       // Returns true if a matching record exists
-        } finally {
-            if (cursor != null) {
-                cursor.close();                // Ensure the cursor is closed to avoid memory leaks
-            }
         }
+        // Ensure the cursor is closed to avoid memory leaks
     }
 
     public boolean addOne(Courses courses){
@@ -99,20 +99,24 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public List<Courses> getAllCourseNames() {
         List<Courses> courseNames = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
 
-        try {
+        try (SQLiteDatabase db = this.getReadableDatabase(); Cursor cursor = db.query(
+                COURSE_TABLE_NAME,    // Table name
+                new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_SLOPE, COLUMN_RATING}, // Columns to retrieve
+                null,                // No WHERE clause
+                null,                // No selection args
+                null,                // No GROUP BY
+                null,                // No HAVING
+                null                 // No ORDER BY
+        )) {
             // Query to get all course details from the table
-            cursor = db.query(
-                    COURSE_TABLE_NAME,    // Table name
-                    new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_SLOPE, COLUMN_RATING}, // Columns to retrieve
-                    null,                // No WHERE clause
-                    null,                // No selection args
-                    null,                // No GROUP BY
-                    null,                // No HAVING
-                    null                 // No ORDER BY
-            );
+            // Table name
+            // Columns to retrieve
+            // No WHERE clause
+            // No selection args
+            // No GROUP BY
+            // No HAVING
+            // No ORDER BY
 
             // Loop through the cursor to add courses to the list
             while (cursor.moveToNext()) {
@@ -125,12 +129,9 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
                 Courses course = new Courses(id, courseRating, slopeRating, name, null); // Assuming `null` for holes
                 courseNames.add(course);
             }
-        } finally {
-            if (cursor != null) {
-                cursor.close(); // Close the cursor to avoid memory leaks
-            }
-            db.close(); // Close the database connection
         }
+        // Close the cursor to avoid memory leaks
+        // Close the database connection
 
         return courseNames; // Return the list of Courses
     }
