@@ -144,13 +144,14 @@ public class CourseActivity extends AppCompatActivity {
                         List<Holes> everyone = dataBaseHelperHoles.getAllHoles();
                         ArrayAdapter<Holes> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, everyone);
                         courseList.setAdapter(courseArrayAdapter);
+
                     } else {
                         nameEntry.setError("Enter a name that matches an existing course or tap 'Add' to create a new course.");
-                        ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
+                        ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
                         courseList.setAdapter(courseArrayAdapter);
                     }
                 } else {
-                    ArrayAdapter<String> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
+                    ArrayAdapter<Courses> courseArrayAdapter = new ArrayAdapter<>(CourseActivity.this, android.R.layout.simple_list_item_1, dataBaseHelperCourses.getAllCourseNames());
                     courseList.setAdapter(courseArrayAdapter);
                     nameEntry.setError("Please enter a course name.");
                 }
@@ -187,24 +188,26 @@ public class CourseActivity extends AppCompatActivity {
         // List item click listener to delete a selected hole from the course
         courseList.setOnItemClickListener((parent, view, position, id) -> {
             Object item = parent.getItemAtPosition(position);
-            String dbName = nameEntry.getText().toString();
 
-            if (!dbName.isEmpty()) {
-                if (item instanceof Holes) {
-                    Holes holes = (Holes) item;
-                    DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
-                    dataBaseHelperHoles.deleteOne(holes);
-                    Toast.makeText(CourseActivity.this, "Hole Deleted", Toast.LENGTH_SHORT).show();
-                } else if (item instanceof Courses) {
-                    Courses courses = (Courses) item;
-                    DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
-                    dataBaseHelperCourses.deleteOne(courses);
-                    Toast.makeText(CourseActivity.this, "Course Deleted", Toast.LENGTH_SHORT).show();
+            if (item instanceof Courses){
+                Courses courses = (Courses) item;
+                DataBaseHelperCourses dataBaseHelperCourses = new DataBaseHelperCourses(CourseActivity.this);
+                dataBaseHelperCourses.deleteOne(courses);
+                Toast.makeText(CourseActivity.this, "Course Deleted", Toast.LENGTH_SHORT).show();
+            } else{
+                String dbName = nameEntry.getText().toString();
+                if (!dbName.isEmpty()) {
+                    if (item instanceof Holes) {
+                        Holes holes = (Holes) item;
+                        DataBaseHelperHoles dataBaseHelperHoles = new DataBaseHelperHoles(CourseActivity.this, dbName);
+                        dataBaseHelperHoles.deleteOne(holes);
+                        Toast.makeText(CourseActivity.this, "Hole Deleted", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(CourseActivity.this, "Unknown item type", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(CourseActivity.this, "Unknown item type", Toast.LENGTH_SHORT).show();
+                    nameEntry.setError("Please enter a name");
                 }
-            } else {
-                nameEntry.setError("Please enter a name");
             }
         });
     }

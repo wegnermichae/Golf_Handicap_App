@@ -54,4 +54,9 @@ public class Courses {
         this.holes = holes;
     }
 
+    @Override
+    public String toString(){
+        return name;
+    }
+
 }

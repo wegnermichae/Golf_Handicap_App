@@ -97,16 +97,16 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public List<String> getAllCourseNames() {
-        List<String> courseNames = new ArrayList<>();
+    public List<Courses> getAllCourseNames() {
+        List<Courses> courseNames = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
 
         try {
-            // Query to get all course names from the table
+            // Query to get all course details from the table
             cursor = db.query(
                     COURSE_TABLE_NAME,    // Table name
-                    new String[]{COLUMN_NAME},   // Column to retrieve
+                    new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_SLOPE, COLUMN_RATING}, // Columns to retrieve
                     null,                // No WHERE clause
                     null,                // No selection args
                     null,                // No GROUP BY
@@ -114,9 +114,16 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
                     null                 // No ORDER BY
             );
 
-            // Loop through the cursor to add course names to the list
+            // Loop through the cursor to add courses to the list
             while (cursor.moveToNext()) {
-                courseNames.add(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+                int slopeRating = cursor.getInt(cursor.getColumnIndex(COLUMN_SLOPE));
+                double courseRating = cursor.getDouble(cursor.getColumnIndex(COLUMN_RATING));
+
+                // Create a new Courses object
+                Courses course = new Courses(id, courseRating, slopeRating, name, null); // Assuming `null` for holes
+                courseNames.add(course);
             }
         } finally {
             if (cursor != null) {
@@ -125,14 +132,16 @@ public class DataBaseHelperCourses extends SQLiteOpenHelper {
             db.close(); // Close the database connection
         }
 
-        return courseNames; // Return the list of course names
+        return courseNames; // Return the list of Courses
     }
 
-    public void deleteOne(Courses courses){
+
+    public void deleteOne(Courses courses) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + COURSE_TABLE_NAME + " WHERE " + COLUMN_ID + " = " + courses.getId();
         db.execSQL(query);
     }
+
 
 
 }
